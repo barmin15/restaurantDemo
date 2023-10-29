@@ -1,3 +1,3 @@
 # restaurantDemo
 
-# db-name: 
+# db-name: Restaurant_Demo
