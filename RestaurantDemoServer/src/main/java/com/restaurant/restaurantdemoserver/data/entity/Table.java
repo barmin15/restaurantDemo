@@ -1,5 +1,6 @@
 package com.restaurant.restaurantdemoserver.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +24,13 @@ public class Table {
 
     private Integer numberOfSeats;
 
-    @OneToMany
-    private Set<Guest> guests;
-
     private String qrCode;
+
+    @ManyToOne
+    @JsonBackReference
+    private Restaurant restaurant;
+
+
+
+
 }
