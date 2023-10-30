@@ -1,12 +1,15 @@
 package com.restaurant.restaurantdemoserver.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "restaurants")
+@Entity(name = "restaurant")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,13 +24,17 @@ public class Restaurant {
 
     private String name;
 
-    private Float locationX;
+    private Double longitude;
 
-    private Float locationY;
+    private Double latitude;
 
-    @OneToOne
-    private Menu menu;
+    @OneToMany(mappedBy = "restaurant")
+    @JsonManagedReference
+    private Set<Table> tables = new HashSet<>();
 
-    @OneToMany
-    private Set<Table> tables;
+
+    public void addTable(Table table){
+        table.setRestaurant(this);
+        tables.add(table);
+    }
 }
