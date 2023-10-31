@@ -28,7 +28,7 @@ public class Restaurant {
 
     private Double latitude;
 
-    @OneToOne
+    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Menu menu;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -41,4 +41,5 @@ public class Restaurant {
         if(tables == null) tables = new HashSet<>();
         tables.add(table);
     }
+
 }
