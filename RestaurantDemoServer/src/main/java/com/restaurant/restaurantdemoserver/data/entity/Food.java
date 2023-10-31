@@ -9,41 +9,44 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "tables")
+@Entity(name = "foods")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Table {
-
+public class Food {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String tableName;
+    private String name;
 
-    private Integer numberOfSeats;
+    private Double price;
 
-    private String qrCode;
+    private Integer rating;
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany()
     @JsonManagedReference
-    private Set<Guest> guests;
+    private Set<FoodAllergy> foodAllergies;
+
+    @Column(columnDefinition = "TEXT")
+    private String pictureUrl;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Restaurant restaurant;
+    private Menu menu;
 
-    public void addRestaurant(Restaurant restaurant){
-        restaurant.addTable(this);
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Guest guest;
+
+    public void addFoodAllergy(FoodAllergy foodAllergy){
+        if(foodAllergies == null) foodAllergies = new HashSet<>();
+
     }
-
-    public void addGuest(Guest guest){
-        if(guests == null) guests = new HashSet<>();
-        guests.add(guest);
-        guest.setTable(this);
-    }
-
 }
