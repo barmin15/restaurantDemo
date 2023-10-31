@@ -1,0 +1,25 @@
+GET http://localhost:8080/api/restaurant/h
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: JSESSIONID=7D7D5889F3DB7981D65CF39DE1473445
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T110925.500.json
+
+###
+
+GET http://localhost:8080/api/restaurant/h
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: JSESSIONID=7D7D5889F3DB7981D65CF39DE1473445
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+GET http://localhost:8080/api/restaurant/h
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+

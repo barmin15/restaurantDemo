@@ -26,11 +26,12 @@ public class Table {
 
     private String qrCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Restaurant restaurant;
 
-
-
+    public void addRestaurant(Restaurant restaurant){
+        restaurant.addTable(this);
+    }
 
 }
