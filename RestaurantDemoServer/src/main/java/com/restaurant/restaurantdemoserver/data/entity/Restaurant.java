@@ -9,7 +9,7 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "restaurant")
+@Entity(name = "restaurants")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,13 +28,17 @@ public class Restaurant {
 
     private Double latitude;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToOne
+    private Menu menu;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Table> tables = new HashSet<>();
+    private Set<Table> tables;
 
 
     public void addTable(Table table){
         table.setRestaurant(this);
+        if(tables == null) tables = new HashSet<>();
         tables.add(table);
     }
 }
