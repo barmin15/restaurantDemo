@@ -5,19 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4da8ba70-7394-467c-b37e-4947e0a30c10" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/respository/MenuRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/dto/MenuDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/dto/RestaurantDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/dto/TableDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/08cb1f24-99b9-44d4-9c08-f1a1d31207a6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/08cb1f24-99b9-44d4-9c08-f1a1d31207a6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/config/DatabaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/config/DatabaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Food/Dessert.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Food/MainCourse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Food/Soup.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Food/Starter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Restaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/drink/AlcoholicDrink.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/data/entity/drink/NonAlcoholicDrink.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/respository/RestaurantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/respository/RestaurantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/RestaurantDemoServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/main/java/com/restaurant/restaurantdemoserver/RestaurantDemoServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RestaurantDemoServer/src/test/java/com/restaurant/restaurantdemoserver/RestaurantDemoServerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantDemoServer/src/test/java/com/restaurant/restaurantdemoserver/RestaurantDemoServerApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,15 +23,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="entity_tests" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,6 +83,53 @@
     <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="RestaurantEntityTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestaurantDemoServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.restaurant.restaurantdemoserver.entityTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.restaurant.restaurantdemoserver.entityTests" />
+      <option name="MAIN_CLASS_NAME" value="com.restaurant.restaurantdemoserver.entityTests.RestaurantEntityTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RestaurantEntityTests.findById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestaurantDemoServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.restaurant.restaurantdemoserver.entityTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.restaurant.restaurantdemoserver.entityTests" />
+      <option name="MAIN_CLASS_NAME" value="com.restaurant.restaurantdemoserver.entityTests.RestaurantEntityTests" />
+      <option name="METHOD_NAME" value="findById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RestaurantEntityTests.saveRestaurantCalledPizzaMe" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestaurantDemoServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.restaurant.restaurantdemoserver.entityTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.restaurant.restaurantdemoserver.entityTests" />
+      <option name="MAIN_CLASS_NAME" value="com.restaurant.restaurantdemoserver.entityTests.RestaurantEntityTests" />
+      <option name="METHOD_NAME" value="saveRestaurantCalledPizzaMe" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RestaurantDemoServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <envs>
         <env name="database_password" value="Rozse211" />
@@ -100,10 +143,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="HTTP Request.generated-requests | #1" />
+      <item itemvalue="HTTP Request.generated-requests | #5" />
+      <item itemvalue="JUnit.RestaurantEntityTests" />
+      <item itemvalue="JUnit.RestaurantEntityTests.findById" />
+      <item itemvalue="JUnit.RestaurantEntityTests.saveRestaurantCalledPizzaMe" />
+      <item itemvalue="Spring Boot.RestaurantDemoServerApplication" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.generated-requests | #1" />
+        <item itemvalue="JUnit.RestaurantEntityTests.saveRestaurantCalledPizzaMe" />
+        <item itemvalue="JUnit.RestaurantEntityTests.findById" />
+        <item itemvalue="JUnit.RestaurantEntityTests" />
         <item itemvalue="HTTP Request.generated-requests | #5" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
       </list>
     </recent_temporary>
   </component>
@@ -120,6 +174,8 @@
       <workItem from="1698582181958" duration="3581000" />
       <workItem from="1698588784942" duration="5012000" />
       <workItem from="1698652656077" duration="14640000" />
+      <workItem from="1698770228585" duration="2548000" />
+      <workItem from="1698836687554" duration="4071000" />
     </task>
     <task id="LOCAL-00001" summary="create: basic file structure">
       <option name="closed" value="true" />
