@@ -24,8 +24,6 @@ public class Table {
 
     private String tableName;
 
-    private Integer numberOfSeats;
-
     private String qrCode;
 
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
