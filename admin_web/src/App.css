@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #00a281;
 }
 
 .App-logo {
@@ -26,6 +27,46 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.table {
+  background-color: #f39c12;
+  width: 350px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  /* justify-content: center; */
+}
+
+.filter-green {
+  filter: invert(51%) sepia(21%) saturate(1467%) hue-rotate(118deg) brightness(94%) contrast(90%);
+}
+
+.delete-table-button {
+  position: absolute;
+  right: 4px;
+  top: 9px;
+}
+
+.tables {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.table > input {
+  background-color: #f39c12;
+  text-align: center;
+  border: 0;
+  font-weight: bold;
+  padding-top: 20px;
+  font-size: x-large;  
+}
+
+.tableNumber {
+  /* position: relative;
+  top: 100px;  */
 }
 
 @keyframes App-logo-spin {
