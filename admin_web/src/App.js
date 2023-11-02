@@ -1,6 +1,6 @@
 import './App.css';
-import DrawTables from './components/DrawTables';
-import SetupTables from './components/SetupTables';
+import DrawTables from './secure/components/DrawTables';
+import SetupTables from './secure/components/SetupTables';
 import { useEffect, useState } from 'react';
 
 function App() {
