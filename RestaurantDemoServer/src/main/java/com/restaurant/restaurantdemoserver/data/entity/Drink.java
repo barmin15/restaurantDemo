@@ -24,6 +24,8 @@ public class Drink {
 
     private int rating;
 
+    private Double price;
+
     @Column(columnDefinition = "TEXT")
     private String pictureUrl;
 

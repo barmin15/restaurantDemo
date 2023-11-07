@@ -31,5 +31,7 @@ public class RestaurantDto {
 
     private String token;
 
+    private String imageUrl;
+
     private Set<Table> tables;
 }
