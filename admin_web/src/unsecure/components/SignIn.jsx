@@ -14,16 +14,16 @@ export function SignIn() {
         e.preventDefault();
 
         if (registerChecker(password, login)) {
+            
             request("POST", "/api/auth/login", {
                 login: login,
                 password: password,
             })
                 .then((response) => {
+                    console.log(response)
                     setUserLogin(response.data.login)
                     setAuthToken(response.data.token);
-
-                    console.log(response);
-                    //navigate("/restaurant")
+                    navigate("/app")
                 }).catch((error) => {
                     console.log(error);
                     //navigate("/error");
