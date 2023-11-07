@@ -38,7 +38,7 @@ export function SignIn() {
                     <h1>Sign in </h1>
                     <input type="email" placeholder="Email" onChange={(e) => setLogin(e.target.value)}/>
                     <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-                    <a>Forgot your password?</a>
+                    <a id="a">Forgot your password?</a>
                     <button onClick={(e) => onLogin(e)}>Sign In</button>
                 </div>
             </div>;
