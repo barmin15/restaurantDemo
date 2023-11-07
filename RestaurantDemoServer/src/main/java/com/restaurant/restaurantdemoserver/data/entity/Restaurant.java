@@ -16,11 +16,14 @@ import java.util.Set;
 @Getter
 @Setter
 public class Restaurant {
-
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String login;
+
+    private String password;
 
     private String name;
 
@@ -28,7 +31,11 @@ public class Restaurant {
 
     private Double latitude;
 
-    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @Column(columnDefinition = "TEXT")
+    private String pictureUrl;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id")
     private Menu menu;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
