@@ -5,12 +5,24 @@ import reportWebVitals from "./test/reportWebVitals";
 
 //pages
 import Enterance from "./unsecure/pages/Enterance";
+import Navbar from "./secure/components/Navbar";
+import Menu from "./secure/pages/Menu";
 
 const Router = createBrowserRouter([
   {
     path: "/",
     element: <Enterance />
   },
+  {
+    path: "/app",
+    element: <Navbar />,
+    children: [
+      {
+        path: "/app/menu",
+        element: <Menu />
+      }
+    ]
+  }
 
 
 ]);
