@@ -1,0 +1,9 @@
+.food-categories-menu {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.food-categories-menu > li {
+    padding: 3vw;
+}

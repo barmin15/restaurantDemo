@@ -5,8 +5,9 @@ import reportWebVitals from "./test/reportWebVitals";
 
 //pages
 import Enterance from "./unsecure/pages/Enterance";
-import Navbar from "./secure/components/Navbar";
 import Menu from "./secure/pages/Menu";
+import Tables from "./secure/pages/Tables";
+import Navbar from "./secure/components/Navbar";
 
 const Router = createBrowserRouter([
   {
@@ -19,7 +20,37 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/app/menu",
-        element: <Menu />
+        element: <Menu />,
+        children: [
+          {
+            path: "/app/menu/alcoholic-drinks",
+            element: "",
+          },
+          {
+            path: "/app/menu/non-alcoholic-drinks",
+            element: "",
+          },
+          {
+            path: "/app/menu/starters",
+            element: "",
+          },
+          {
+            path: "/app/menu/soups",
+            element: "",
+          },
+          {
+            path: "/app/menu/main-courses",
+            element: "",
+          },
+          {
+            path: "/app/menu/desserts",
+            element: "",
+          }
+        ]
+      },
+      {
+        path: "/app/tables",
+        element: <Tables />
       }
     ]
   }
