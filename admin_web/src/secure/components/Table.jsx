@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 
-const Table = ({ tableName, index, handleTableNamesChange }) => {
+const Table = ({ table, index, handleChangeTableName, handleTableDelete}) => {
 
-    const [tableNameState, setTableNameState] = useState(tableName);
+    //console.log(table.tableName);
+
+    const [tableName, setTableName] = useState(table.tableName);
+
     const [isMouseOver, setIsMouseOver] = useState(false);
 
     const inputElement = useRef();
@@ -22,18 +25,28 @@ const Table = ({ tableName, index, handleTableNamesChange }) => {
     return ( 
         <div className="table">
             {isMouseOver ? (<input ref={inputElement}
-                            type="text" value={tableNameState} 
+                            type="text" value={tableName} 
                             onChange={e => {
-                                setTableNameState(e.target.value);
-                                // handleTableNamesChange(tableNameState, index);
+                                //table.tableName = e.target.value;
+                                setTableName(e.target.value);
+                                handleChangeTableName(index, tableName);
+                                // setTableState(tableState => ({
+                                    //     ...tableState,
+                                    //     tableName: e.target.value,
+                                    // }));
                             }} 
                             className="tableNumber"/>) : (
                             <input type="text"
                             className="tableNumber"
-                            value={tableNameState} 
+                            value={tableName} 
                             onChange={e => {
-                                setTableNameState(e.target.value);
-                                // handleTableNamesChange(tableNameState, index);
+                                setTableName(e.target.value);
+                                handleChangeTableName(index, tableName);
+                                //table.tableName = e.target.value;
+                                // setTableState(tableState => ({
+                                //     ...tableState,
+                                //     tableName: e.target.value,
+                                // }));
                             }} 
                             disabled/>)}
             <img className="filter-green" 
@@ -45,7 +58,11 @@ const Table = ({ tableName, index, handleTableNamesChange }) => {
             <img className="filter-green delete-table-button" 
                 src="images/delete-button-svgrepo-com.svg" 
                 alt="table" 
-                width="7%"/>
+                width="7%"
+                onClick={() => 
+                    handleTableDelete(index)
+                }
+                />
         </div> );
 }
 

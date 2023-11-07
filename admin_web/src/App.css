@@ -50,6 +50,10 @@
   top: 9px;
 }
 
+.delete-table-button:hover {
+  cursor: pointer;
+}
+
 .tables {
   display: flex;
   flex-wrap: wrap;
