@@ -1,9 +1,11 @@
 .food-categories-menu {
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
+    width: 70wv;
 }
 
-.food-categories-menu > li {
-    padding: 3vw;
+.food-categories-menu button {
+    background-color: #2B2730;
+    border-radius: 20px;
+    text-align: center;
+    width: 10vw;
+    height: 5vh;
 }
