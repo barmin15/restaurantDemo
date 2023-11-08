@@ -30,7 +30,7 @@ const Router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: "/app/menu/alcoholic-drinks/add",
+        path: "/app/menu/alcoholic-drinks/create",
         element: <EditMenuItem />,
       },
       {
@@ -42,7 +42,7 @@ const Router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: "/app/menu/non-alcoholic-drinks/add",
+        path: "/app/menu/non-alcoholic-drinks/create",
         element: <EditMenuItem />,
       },
       {
@@ -54,7 +54,7 @@ const Router = createBrowserRouter([
         element: <Menu />, 
       },
       {
-        path: "/app/menu/starters/add",
+        path: "/app/menu/starters/create",
         element: <EditMenuItem />,
       },
       {
@@ -66,7 +66,7 @@ const Router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: "/app/menu/soups/add",
+        path: "/app/menu/soups/create",
         element: <EditMenuItem />,
       },
       {
@@ -78,7 +78,7 @@ const Router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: "/app/menu/main-courses/add",
+        path: "/app/menu/main-courses/create",
         element: <EditMenuItem />,
       },
       {
@@ -90,7 +90,7 @@ const Router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: "/app/menu/desserts/add",
+        path: "/app/menu/desserts/create",
         element: <EditMenuItem />,
       },
       {
