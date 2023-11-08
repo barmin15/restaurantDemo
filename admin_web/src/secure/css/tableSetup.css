@@ -1,0 +1,20 @@
+.input-group {
+    position: absolute;
+    top: 50%;
+    left: 44%;
+    margin: -50px 0 0 -50px;
+}
+
+.input {
+    border: solid 1.5px #2B2730;
+    border-radius: 1rem;
+    background: none;
+    padding: 1rem;
+    font-size: 1rem;
+    color: #2B2730;
+    transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tablesEnter {
+    color: #2B2730;
+}

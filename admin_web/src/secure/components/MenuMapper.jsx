@@ -5,18 +5,6 @@ export default function MenuMapper({ data }) {
     const [head, setHead] = useState(null);
     const [body, setBody] = useState(null);
 
-
-    data = [
-        {
-            name: "ármin",
-            rating: 4
-        },
-        {
-            name: "laci",
-            rating: 1
-        }
-    ]
-
     const convertRatings = (number) => "★".repeat(number);
 
     useEffect(() => {
