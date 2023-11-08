@@ -9,11 +9,17 @@ import Menu from "./secure/pages/Menu";
 import Tables from "./secure/pages/Tables";
 import Navbar from "./secure/components/Navbar";
 import EditMenuItem from "./secure/components/EditMenuItem";
+import TablesSetup from "./secure/pages/TablesSetub";
+
 
 const Router = createBrowserRouter([
   {
     path: "/",
     element: <Enterance />
+  },
+  {
+    path: "/tableSetup",
+    element: <TablesSetup />
   },
   {
     path: "/app",

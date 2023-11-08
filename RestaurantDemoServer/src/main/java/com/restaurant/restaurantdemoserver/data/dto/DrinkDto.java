@@ -6,12 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class DrinkDto {
+
+    private UUID publicId;
 
     private String name;
 

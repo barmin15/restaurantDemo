@@ -1,6 +1,8 @@
 import "../css/foodCategories.css";
 
 export default function FoodCategories() {
+
+
   return (
     <div>
       <menu className="food-categories-menu">

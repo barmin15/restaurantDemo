@@ -12,29 +12,40 @@ export default function Navbar() {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"
   );
 
-  // useEffect(() => {
-  //     getRequest(`api/restaurant/${getUserLogin()}`)
-  //         .then((response) => {
-  //             setName(response.data.name);
-  //             setImageUrl(response.data.imageUrl);
-  //         })
-  //         .catch((error) => console.log(error))
-  // })
+  useEffect(() => {
+    getRequest(`api/restaurant/${getUserLogin()}`)
+      .then((response) => {
+        const restaurant = response.data;
+        setName(restaurant.name);
+        restaurant.imageUrl !== null && setImageUrl(restaurant.imageUrl);
+      })
+      .catch((error) => console.log(error))
+  })
 
   return (<>
-    <nav className="topnav">
+    <div class="navbar">
       <a className="restaurant">{name}</a>
       <img className="logo" src={imageUrl} alt="logo" />
       <a className="logout" onClick={() => navigate("/")}>
         Log out
       </a>
-      <a className="menu" onClick={() => navigate("/app/menu")}>
-        Menu
-      </a>
       <a className="tables" onClick={() => navigate("/app/tables")}>
-        Tables
-      </a>
-    </nav>
+      Tables
+    </a>
+      <div class="dropdown">
+        <button class="dropbtn">Menu
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a>Alcoholic drinks</a>
+          <a>Non alcoholic drinks</a>
+          <a>Starters</a>
+          <a>Soups</a>
+          <a>Main courses</a>
+          <a>Desserts</a>
+        </div>
+      </div>
+    </div>
     <Outlet />
   </>)
 }

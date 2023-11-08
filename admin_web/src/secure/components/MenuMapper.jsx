@@ -1,58 +1,53 @@
+import { useEffect, useState } from "react";
 import "../css/menuMapper.css"
 
 export default function MenuMapper({ data }) {
+    const [head, setHead] = useState(null);
+    const [body, setBody] = useState(null);
 
-    const temp = [
-        {
-            name: "pizza margaritha",
-            price: 1999,
-            rating: 4
-        },
-        {
-            name: "pizza california",
-            price: 3140,
-            rating: 3
-        },
-        {
-            name: "pizza szexard",
-            price: 2490,
-            rating: 5
-        },
-    ]
+    const convertRatings = (number) => "★".repeat(number);
 
-    const convertRatings = (number) => "*".repeat(number);
+    useEffect(() => {
+        const tableHeader = Object.keys(data[0]).map((key, i) => {
+            return (key !== "publicId" && <th key={i}>{key.toUpperCase()}</th>)
+        })
+        const tableBody = [];
     
-    
+        data.forEach((e, i) => {
+            tableBody.push(
+                <tr key={i}>
+                    {Object.keys(e).map(key => {
+                        if(key === "rating"){
+                            return <td>{convertRatings(e[key])}</td>
+                        } else if( key !== "publicId"){
+                            return <td>{e[key]}</td>
+                        }
+                    })}
+                    <td id={e.publicId}>edit</td>
+                    <td id={e.publicId}>remove</td>
+                </tr>
+            )
+        });
 
-    const tableHeader = Object.keys(temp[0]).map((key, i) => {
-        return (<th key={i}>{key.toUpperCase()}</th>)
-    })
+        setHead(tableHeader);
+        setBody(tableBody);
+    }, [])
 
-    const content = temp.map((food, i) => (<tr key={i}>
-        <td>{food.name}</td>
-        <td>{food.price}</td>
-        <td>{convertRatings(food.rating)}</td>
-        <td>edit</td>
-        <td>remove</td>
-    </tr>))
 
     return (
-    <>
-        <table className="table">
-            <thead>
-                <tr>
-                    {/* {tableHeader} */}
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Rating</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                    {content}
-            </tbody>
-        </table>
-    </>
+        <>
+            <table className="table">
+                <thead>
+                    <tr>
+                        {head}
+                        <th>EDIT</th>
+                        <th>REMOVE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {body}
+                </tbody>
+            </table>
+        </>
     )
 }
