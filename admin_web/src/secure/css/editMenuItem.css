@@ -1,0 +1,14 @@
+
+.editMenuForm {
+    display: flex;
+    flex-direction: column;
+}
+
+input::file-selector-button {
+    background-image: url("../../images/scenery.png");  
+    background-size: cover;
+    background-repeat: no-repeat;  
+    background-position: center;
+width: 20vw;
+height: 20vh;
+}
