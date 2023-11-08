@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,6 +81,14 @@ public class FoodServiceImpl implements FoodService {
         return desserts.stream().map(this::convertFoodToDto).collect(Collectors.toSet());
     }
 
+    @Override
+    public FoodDto getFoodByPublicId(UUID publicId) {
+        Food food = foodRepository.getFoodByPublicId(publicId)
+                .orElseThrow((() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND)));
+
+        return convertFoodToDto(food);
+    }
+
     private FoodDto convertFoodToDto(Food food) {
         return FoodDto.builder()
                 .name(food.getName())
@@ -88,6 +97,7 @@ public class FoodServiceImpl implements FoodService {
                 .pictureUrl(food.getPictureUrl())
                 .price(food.getPrice())
                 .rating(food.getRating())
+                .publicId(food.getPublicId())
                 .build();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,6 +26,11 @@ public class DrinkController {
     @GetMapping("/nonAlcoholic/{login}")
     public Set<DrinkDto> getNonAlcoholicDrinkByLogin(@PathVariable String login){
         return drinkService.getNonAlcoholicDrinkByLogin(login);
+    }
+
+    @GetMapping("/{publicId}")
+    public DrinkDto getDrinkByPublicId(@PathVariable UUID publicId){
+        return drinkService.getDrinkByPublicId(publicId);
     }
 
 

@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +57,14 @@ public class DrinkServiceImpl implements DrinkService {
         return nonAlcoholicDrinks.stream().map(this::convertDrinkToDto).collect(Collectors.toSet());
     }
 
+    @Override
+    public DrinkDto getDrinkByPublicId(UUID publicId) {
+        Drink drink = drinkRepository.getDrinkByPublicId(publicId)
+                .orElseThrow(() -> new AppException("Unknown Drink", HttpStatus.NOT_FOUND));
+
+        return convertDrinkToDto(drink);
+    }
+
     private DrinkDto convertDrinkToDto(Drink drink) {
         return DrinkDto.builder()
                 .name(drink.getName())
@@ -64,6 +73,7 @@ public class DrinkServiceImpl implements DrinkService {
                 .pictureUrl(drink.getPictureUrl())
                 .price(drink.getPrice())
                 .rating(drink.getRating())
+                .publicId(drink.getPublicId())
                 .build();
     }
 }
