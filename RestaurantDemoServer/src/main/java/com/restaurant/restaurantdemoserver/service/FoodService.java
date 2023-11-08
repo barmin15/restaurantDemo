@@ -5,6 +5,7 @@ import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public interface FoodService {
@@ -16,4 +17,6 @@ public interface FoodService {
     Set<FoodDto> getMainCoursesByLogin(String login);
 
     Set<FoodDto> getDessertsByLogin(String login);
+
+    FoodDto getFoodByPublicId(UUID publicId);
 }
