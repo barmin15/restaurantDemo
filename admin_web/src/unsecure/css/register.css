@@ -14,7 +14,7 @@
 
 body {
 	background: rgb(233, 102, 160);
-	background: linear-gradient(90deg, rgba(233, 102, 160, 1) 0%, rgba(101, 84, 175, 1) 100%);
+	background: radial-gradient(circle, rgba(233, 102, 160, 1) 26%, rgba(101, 84, 175, 1) 100%);
 	font-family: 'Montserrat', sans-serif;
 }
 
