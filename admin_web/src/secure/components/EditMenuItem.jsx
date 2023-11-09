@@ -2,21 +2,42 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../css/editMenuItem.css";
 import noImagePic from "../../images/scenery.png";
+import { request } from "../../fetch/fetch";
+import { getUserLogin } from "../../storage/localStorage";
 
 export default function EditMenuItem() {
   const [menuItem, setMenuItem] = useState({});
+
+  const location = useLocation();
+  let itemId = getProductId(location.pathname);
+  let foodCategory = getFoodCategory(location.pathname);
 
   const handleChange = (e) => {
     e.preventDefault();
     setMenuItem({ ...menuItem, [e.target.name]: e.target.value });
   };
 
-  console.log(menuItem);
+
 
   // image     "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575"
 
-  const location = useLocation();
-  let itemId = getProductId(location.pathname);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+
+    let body = {};
+    body.name = menuItem.name;
+    body.description = menuItem.description;
+    body.allergies = [];
+    body.price = menuItem.price;
+    body.pictureUrl = menuItem.pictureUrl;
+
+    request("POST", `/api/food/${foodCategory}/${getUserLogin()}`, body)
+      .then((res) => console.log(res))
+      .catch(error => console.error(error));
+    };
+
+  // image     "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575"
 
   function getProductId(url) {
     let result = "";
@@ -26,6 +47,19 @@ export default function EditMenuItem() {
       result += url[i];
     }
     return result;
+  }
+
+  function getFoodCategory(url) {
+    let result = [];
+    let i = url.lastIndexOf("/") - 1;
+
+    for (i; i > 0; i--) {
+      if (url[i] === "/") {
+        return result.join("");
+      } else {
+        result.unshift(url[i]);
+      }
+    }
   }
 
   useEffect(() => {
@@ -61,6 +95,7 @@ export default function EditMenuItem() {
   return (
     <>
       {Object.keys(menuItem).length !== 0 && (
+
         <form className="editMenuForm" onChange={handleChange}>
           <label htmlFor="name">Name:</label>
           <input
@@ -74,32 +109,48 @@ export default function EditMenuItem() {
             id="price"
             value={menuItem.price}
           />
+
+        <form
+          className="editMenuForm"
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        >
+          <label htmlFor="name">Name:</label>
+          <input name="name" id="name" value={menuItem.name} />
+          <label htmlFor="">Price:</label>
+          <input name="price" id="price" value={menuItem.price} />
           <label htmlFor="allergies">Choose allergies:</label>
 
           <select name="allergies" id="allergies">
-          {menuItem.allergies.length !== 0 && menuItem.allergies.map((item) => (
-            <option key={item.pubId} value={item.name}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+            {menuItem.allergies.length !== 0 &&
+              menuItem.allergies.map((item) => (
+                <option key={item.pubId} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+          </select>
 
           <label htmlFor="">Description:</label>
+
           <textarea
             name="description"
             value={menuItem.description}
           />
+
+          <textarea name="description" value={menuItem.description} />
+
           <br />
           {menuItem.imgUrl !== "" && (
-          <input
-            type="image"
-            src={menuItem.imgUrl}
-            alt="Submit"
-            width="48"
-            height="48"
-          ></input>
-        )}
+            <input
+              type="image"
+              src={menuItem.imgUrl}
+              alt="Submit"
+              width="48"
+              height="48"
+            ></input>
+          )}
           {menuItem.imgUrl === "" && <input type="file"></input>}
+          <button>Submit</button>
         </form>
       )}
     </>
