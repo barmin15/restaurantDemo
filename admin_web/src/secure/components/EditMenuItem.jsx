@@ -11,6 +11,8 @@ export default function EditMenuItem() {
     setMenuItem({ ...menuItem, [e.target.name]: e.target.value });
   };
 
+  console.log(menuItem);
+
   // image     "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575"
 
   const location = useLocation();
@@ -59,20 +61,18 @@ export default function EditMenuItem() {
   return (
     <>
       {Object.keys(menuItem).length !== 0 && (
-        <form className="editMenuForm">
+        <form className="editMenuForm" onChange={handleChange}>
           <label htmlFor="name">Name:</label>
           <input
             name="name"
             id="name"
             value={menuItem.name}
-            onChange={handleChange}
           />
           <label htmlFor="">Price:</label>
           <input
             name="price"
             id="price"
             value={menuItem.price}
-            onChange={handleChange}
           />
           <label htmlFor="allergies">Choose allergies:</label>
 
@@ -88,7 +88,6 @@ export default function EditMenuItem() {
           <textarea
             name="description"
             value={menuItem.description}
-            onChange={handleChange}
           />
           <br />
           {menuItem.imgUrl !== "" && (
