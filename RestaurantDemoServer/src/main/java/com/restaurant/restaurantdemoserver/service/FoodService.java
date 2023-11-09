@@ -19,4 +19,12 @@ public interface FoodService {
     Set<FoodDto> getDessertsByLogin(String login);
 
     FoodDto getFoodByPublicId(UUID publicId);
+
+    FoodDto insertStarter(String login, FoodDto food);
+
+    FoodDto insertSoup(String login, FoodDto food);
+
+    FoodDto insertMaincourse(String login, FoodDto food);
+
+    FoodDto insertDessert(String login, FoodDto food);
 }

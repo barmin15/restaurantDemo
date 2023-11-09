@@ -7,10 +7,9 @@ import org.springframework.stereotype.Component;
 
 
 
-@RequiredArgsConstructor
-@Component
+
 public class DatabaseConfig {
-    private final FoodAllergyRepository foodAllergyRepository;
+  /*  private final FoodAllergyRepository foodAllergyRepository;
     private final RestaurantRepository restaurantRepository;
     private final TableRepository tableRepository;
     private final MenuRepository menuRepository;
@@ -20,5 +19,5 @@ public class DatabaseConfig {
 
     public void configureRestaurant() {
     }
-
+*/
 }

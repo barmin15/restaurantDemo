@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name = "foodAllergies")
 @Builder
@@ -19,6 +20,9 @@ public class FoodAllergy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID publicId;
 
     @Column(columnDefinition = "TEXT")
     private String iconUrlBlob;

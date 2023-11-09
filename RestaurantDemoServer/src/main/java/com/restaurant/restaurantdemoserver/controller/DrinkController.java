@@ -1,19 +1,20 @@
 package com.restaurant.restaurantdemoserver.controller;
 
 import com.restaurant.restaurantdemoserver.data.dto.DrinkDto;
+import com.restaurant.restaurantdemoserver.data.dto.FoodDto;
 import com.restaurant.restaurantdemoserver.service.DrinkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+
 @RestController
+@Controller
 @RequestMapping("/api/drink")
+@RequiredArgsConstructor
 public class DrinkController {
 
     private final DrinkService drinkService;
@@ -33,5 +34,16 @@ public class DrinkController {
         return drinkService.getDrinkByPublicId(publicId);
     }
 
+    @PostMapping("/alcoholicDrink/{login}")
+    public DrinkDto insertAlcoholicDrink(@PathVariable String login, @RequestBody DrinkDto drink){
+        return drinkService.insertAlcoholicDrink(login, drink);
+    }
+    @PostMapping("/nonAlcoholicDrink/{login}")
+    public DrinkDto insertNonAlcoholicDrink(@PathVariable String login, @RequestBody DrinkDto drink){
+        return drinkService.insertNonAlcoholicDrink(login, drink);
+    }
+
 
 }
+
+
