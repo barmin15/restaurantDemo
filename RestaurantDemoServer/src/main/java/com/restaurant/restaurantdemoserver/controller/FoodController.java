@@ -41,19 +41,19 @@ public class FoodController {
        return foodService.getFoodByPublicId(publicId);
     }
 
-    @PostMapping("/starter/{login}")
+    @PostMapping("/starters/{login}")
     public FoodDto insertStarter(@PathVariable String login, @RequestBody FoodDto food){
         return foodService.insertStarter(login, food);
     }
-    @PostMapping("/spup/{login}")
+    @PostMapping("/soups/{login}")
     public FoodDto insertSoup(@PathVariable String login, @RequestBody FoodDto food){
         return foodService.insertSoup(login, food);
     }
-    @PostMapping("/mainCourse/{login}")
+    @PostMapping("/main-courses/{login}")
     public FoodDto insertMaincourse(@PathVariable String login, @RequestBody FoodDto food){
         return foodService.insertMaincourse(login, food);
     }
-    @PostMapping("/dessert/{login}")
+    @PostMapping("/desserts/{login}")
     public FoodDto insertDessert(@PathVariable String login, @RequestBody FoodDto food){
         return foodService.insertDessert(login, food);
     }
