@@ -4,8 +4,10 @@ package com.restaurant.restaurantdemoserver.service.serviceImpl;
 import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import com.restaurant.restaurantdemoserver.data.dto.security.LoginDto;
 import com.restaurant.restaurantdemoserver.data.dto.security.RegisterDto;
+import com.restaurant.restaurantdemoserver.data.entity.Menu;
 import com.restaurant.restaurantdemoserver.data.entity.Restaurant;
 import com.restaurant.restaurantdemoserver.exception.AppException;
+import com.restaurant.restaurantdemoserver.respository.MenuRepository;
 import com.restaurant.restaurantdemoserver.respository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final RestaurantRepository restaurantRepository;
+    private final MenuRepository menuRepository;
 
     @Override
     public RestaurantDto findByLogin(String login) {
@@ -46,8 +50,16 @@ public class AuthServiceImpl implements AuthService {
                 .login(resturantDto.getLogin())
                 .password(passwordEncoder.encode(CharBuffer.wrap(resturantDto.getPassword())))
                 .build();
+        UUID menuPublicId = UUID.randomUUID();
 
+        Menu menu = Menu.builder().publicId(menuPublicId).build();
+
+        menu = menuRepository.save(menu);
         restaurant = restaurantRepository.save(restaurant);
+
+        restaurant.setMenu(menu);
+        restaurant = restaurantRepository.save(restaurant);
+
 
         return RestaurantDto.builder()
                 .login(restaurant.getLogin())

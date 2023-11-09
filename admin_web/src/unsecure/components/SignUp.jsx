@@ -21,7 +21,7 @@ export function SignUp() {
                 if (passwordChecker(password, passwordRepeat)) {
                     setIsWrongPassword(false);
                     setIsInvalidEmail(false);
-                
+
                     request("POST", "/api/auth/register", {
                         login: login,
                         restaurantName: restaurantName,
@@ -30,12 +30,9 @@ export function SignUp() {
                         .then((response) => {
                             setUserLogin(response.data.login)
                             setAuthToken(response.data.token);
-
-                            console.log(response);
-                            //navigate("/restaurant")
+                            navigate("/tableSetup")
                         }).catch((error) => {
-                            console.log(error);
-                            //navigate("/error");
+                            navigate("/error");
                         });
                 } else {
                     setIsWrongPassword(true);

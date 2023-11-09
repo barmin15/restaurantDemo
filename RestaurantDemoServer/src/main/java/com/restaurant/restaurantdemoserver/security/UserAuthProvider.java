@@ -40,11 +40,13 @@ public class UserAuthProvider {
     }
 
     public Authentication validateToken(String token){
+
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey))
                 .build();
         DecodedJWT decoded = verifier.verify(token);
 
         RestaurantDto restaurant = authService.findByLogin(decoded.getIssuer());
+
 
         return new UsernamePasswordAuthenticationToken(restaurant, null, Collections.emptyList());
     }

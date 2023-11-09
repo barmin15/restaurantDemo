@@ -26,5 +26,5 @@ public class DrinkDto {
 
     private String description;
 
-    private Set<FoodAllergy> drinkAllergies;
+    private Set<FoodAllergyDto> drinkAllergies;
 }

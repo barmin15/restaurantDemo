@@ -1,11 +1,9 @@
 package com.restaurant.restaurantdemoserver.service.serviceImpl;
 
 import com.restaurant.restaurantdemoserver.data.dto.DrinkDto;
+import com.restaurant.restaurantdemoserver.data.dto.FoodAllergyDto;
 import com.restaurant.restaurantdemoserver.data.dto.FoodDto;
-import com.restaurant.restaurantdemoserver.data.entity.Drink;
-import com.restaurant.restaurantdemoserver.data.entity.Food;
-import com.restaurant.restaurantdemoserver.data.entity.Menu;
-import com.restaurant.restaurantdemoserver.data.entity.Restaurant;
+import com.restaurant.restaurantdemoserver.data.entity.*;
 import com.restaurant.restaurantdemoserver.exception.AppException;
 import com.restaurant.restaurantdemoserver.respository.DrinkRepository;
 import com.restaurant.restaurantdemoserver.respository.FoodRepository;
@@ -16,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -65,15 +64,73 @@ public class DrinkServiceImpl implements DrinkService {
         return convertDrinkToDto(drink);
     }
 
+    @Override
+    public DrinkDto insertAlcoholicDrink(String login, DrinkDto drink) {
+        Restaurant restaurant = restaurantRepository.findByLogin(login)
+                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+
+        Drink inserted = drinkRepository.save(convertDrinkDtoToEntity(drink));
+
+        Long menuId = restaurant.getMenu().getId();
+
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new AppException("Unknown Menu", HttpStatus.NOT_FOUND));
+
+        menu.addAlcoholicDrink(inserted);
+
+        menuRepository.save(menu);
+
+        return convertDrinkToDto(inserted);
+    }
+
+    @Override
+    public DrinkDto insertNonAlcoholicDrink(String login, DrinkDto drink) {
+        Restaurant restaurant = restaurantRepository.findByLogin(login)
+                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+
+        Drink inserted = drinkRepository.save(convertDrinkDtoToEntity(drink));
+
+        Long menuId = restaurant.getMenu().getId();
+
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new AppException("Unknown Menu", HttpStatus.NOT_FOUND));
+
+        menu.addNonAlcoholicDrink(inserted);
+
+        menuRepository.save(menu);
+
+        return convertDrinkToDto(inserted);
+    }
+
     private DrinkDto convertDrinkToDto(Drink drink) {
         return DrinkDto.builder()
                 .name(drink.getName())
-                .drinkAllergies(drink.getDrinkAllergies())
+                .drinkAllergies(convertAllergyToDto(drink.getDrinkAllergies()))
                 .description(drink.getDescription())
                 .pictureUrl(drink.getPictureUrl())
                 .price(drink.getPrice())
                 .rating(drink.getRating())
                 .publicId(drink.getPublicId())
+                .build();
+    }
+
+    private Set<FoodAllergyDto> convertAllergyToDto(Set<FoodAllergy> allergies) {
+        Set<FoodAllergyDto> allergyDtos = new HashSet<>();
+        allergies.forEach(allergy -> allergyDtos.add(FoodAllergyDto.builder()
+                .name(allergy.getAllergy().toString())
+                .publicId(allergy.getPublicId())
+                .build()));
+
+        return allergyDtos;
+    }
+
+    private Drink convertDrinkDtoToEntity(DrinkDto drinkDto) {
+        return Drink.builder()
+                .name(drinkDto.getName())
+                .description(drinkDto.getDescription())
+                .pictureUrl(drinkDto.getPictureUrl())
+                .rating(drinkDto.getRating())
+                .price(drinkDto.getPrice())
                 .build();
     }
 }

@@ -21,7 +21,6 @@ public class Drink {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID publicId;
 

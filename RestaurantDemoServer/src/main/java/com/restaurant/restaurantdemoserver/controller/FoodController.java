@@ -6,10 +6,7 @@ import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import com.restaurant.restaurantdemoserver.data.entity.Food;
 import com.restaurant.restaurantdemoserver.service.FoodService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.UUID;
@@ -42,5 +39,22 @@ public class FoodController {
     @GetMapping("/{publicId}")
     public FoodDto getFoodByPublicId(@PathVariable UUID publicId){
        return foodService.getFoodByPublicId(publicId);
+    }
+
+    @PostMapping("/starter/{login}")
+    public FoodDto insertStarter(@PathVariable String login, @RequestBody FoodDto food){
+        return foodService.insertStarter(login, food);
+    }
+    @PostMapping("/spup/{login}")
+    public FoodDto insertSoup(@PathVariable String login, @RequestBody FoodDto food){
+        return foodService.insertSoup(login, food);
+    }
+    @PostMapping("/mainCourse/{login}")
+    public FoodDto insertMaincourse(@PathVariable String login, @RequestBody FoodDto food){
+        return foodService.insertMaincourse(login, food);
+    }
+    @PostMapping("/dessert/{login}")
+    public FoodDto insertDessert(@PathVariable String login, @RequestBody FoodDto food){
+        return foodService.insertDessert(login, food);
     }
 }

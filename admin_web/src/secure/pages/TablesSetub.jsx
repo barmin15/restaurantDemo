@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "../css/tableSetup.css"
 import MenuMapper from "../components/MenuMapper";
+import { request } from "../../fetch/fetch";
+import { getUserLogin } from "../../storage/localStorage";
 
 export default function TablesSetup() {
   const [amount, setAmount] = useState(null);
@@ -14,18 +16,20 @@ export default function TablesSetup() {
     setIsInput(false);
   }
 
-  function createTables(num){
+  function createTables(num) {
     const createdTables = [];
 
-    for(let i = 1; i <= num; i++){
-      createdTables.push({name: "table " + i, QR_code: "not set"});
+    for (let i = 1; i <= num; i++) {
+      createdTables.push({ tableName: "table " + i, qrCode: "not set" });
     }
-    console.log(createdTables);
     return createdTables;
   }
 
-  function onSubmitTables(e){
+  function onSubmitTables(e) {
     e.preventDefault();
+    request("POST", `/api/table/register/${getUserLogin()}`, tables)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   return (isInput ?
@@ -36,7 +40,7 @@ export default function TablesSetup() {
     </form >
     :
     <div className="tables">
-        <MenuMapper data={tables} />
-        <button className="submitTables" onClick={(e) => onSubmitTables(e)}>submit</button>
+      <MenuMapper data={tables} />
+      <button className="submitTables" onClick={(e) => onSubmitTables(e)}>submit</button>
     </div>)
 }
