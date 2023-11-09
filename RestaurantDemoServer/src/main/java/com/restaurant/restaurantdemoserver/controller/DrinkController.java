@@ -34,11 +34,11 @@ public class DrinkController {
         return drinkService.getDrinkByPublicId(publicId);
     }
 
-    @PostMapping("/alcoholicDrink/{login}")
+    @PostMapping("/alcoholic-drinks/{login}")
     public DrinkDto insertAlcoholicDrink(@PathVariable String login, @RequestBody DrinkDto drink){
         return drinkService.insertAlcoholicDrink(login, drink);
     }
-    @PostMapping("/nonAlcoholicDrink/{login}")
+    @PostMapping("/non-alcoholic-drinks/{login}")
     public DrinkDto insertNonAlcoholicDrink(@PathVariable String login, @RequestBody DrinkDto drink){
         return drinkService.insertNonAlcoholicDrink(login, drink);
     }
