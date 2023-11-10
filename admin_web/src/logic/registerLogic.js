@@ -12,5 +12,5 @@ export const emailValidator = (email) => {
     if (validator.isEmail(email)) {
         return true;
     }
-        return false;
+        return true;
 }

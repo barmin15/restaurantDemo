@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface TableService {
     void saveTablesAfterRegister(String login, List<TableDto> tables);
+
+    List<TableDto> getAll(String login);
 }
