@@ -68,7 +68,7 @@ export default function EditMenuItem() {
   return (<>
       {Object.keys(menuItem).length !== 0 && (
 
-       
+
         <form
           className="editMenuForm"
           onChange={handleChange}

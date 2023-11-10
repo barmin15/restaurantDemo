@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,17 @@ public class TableServiceImpl implements TableService {
 
         restaurantRepository.save(restaurant);
 
+    }
+
+    @Override
+    public List<TableDto> getAll(String login) {
+        Restaurant restaurant = restaurantRepository.findByLogin(login)
+                .orElseThrow(()-> new AppException("Unknown Login", HttpStatus.NOT_FOUND));
+
+        Long restaurantId = restaurant.getId();
+
+        return tableRepository.getAllByRestaurantId(restaurantId).stream()
+                .map(tableConverter::convertTableEntityToDto).collect(Collectors.toList());
     }
 
 
