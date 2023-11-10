@@ -10,16 +10,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @RequiredArgsConstructor
 public class RestaurantDemoServerApplication {
 
+    private final DatabaseConfig databaseConfig;
+
     public static void main(String[] args) {
         SpringApplication.run(RestaurantDemoServerApplication.class, args);
     }
 
 
 
-/*    @PostConstruct
+    @PostConstruct
     public void configure(){
-        databaseConfig.configureRestaurant();
-    }*/
+       databaseConfig.createFoodAllergies();
+       databaseConfig.createRestaurant();
+    }
 
 
 }

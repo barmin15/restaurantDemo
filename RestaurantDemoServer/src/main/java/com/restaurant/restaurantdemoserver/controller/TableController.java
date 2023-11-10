@@ -20,7 +20,7 @@ public class TableController {
     private final TableService tableService;
 
     @PostMapping("/register/{login}")
-    public void getRestaurantByLogin(@PathVariable String login, @RequestBody List<TableDto> tables) {
+    public void saveTablesAfterRegister(@PathVariable String login, @RequestBody List<TableDto> tables) {
        tableService.saveTablesAfterRegister(login, tables);
     }
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,10 +16,11 @@ import java.util.Set;
 @Data
 public class MenuDto {
     private String login;
-    private Set<Drink> alcoholicDrinks;
-    private Set<Drink> nonAlcoholicDrinks;
-    private Set<Food> starters;
-    private Set<Food> soups;
-    private Set<Food> mainCourses;
-    private Set<Food> desserts;
+    private UUID publicId;
+    private Set<DrinkDto> alcoholicDrinks;
+    private Set<DrinkDto> nonAlcoholicDrinks;
+    private Set<FoodDto> starters;
+    private Set<FoodDto> soups;
+    private Set<FoodDto> mainCourses;
+    private Set<FoodDto> desserts;
 }

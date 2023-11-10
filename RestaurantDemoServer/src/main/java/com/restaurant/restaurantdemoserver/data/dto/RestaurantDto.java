@@ -25,7 +25,7 @@ public class RestaurantDto {
 
     private Double latitude;
 
-    private Menu menu;
+    private MenuDto menu;
 
     private String login;
 
@@ -33,5 +33,5 @@ public class RestaurantDto {
 
     private String imageUrl;
 
-    private Set<Table> tables;
+    private Set<TableDto> tables;
 }
