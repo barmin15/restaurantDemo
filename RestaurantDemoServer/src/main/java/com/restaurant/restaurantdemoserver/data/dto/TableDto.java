@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +13,7 @@ import java.util.Set;
 @Data
 public class TableDto {
     private String tableName;
+    private UUID publicId;
     private String qrCode;
     private String login;
     private List<GuestDto> guest;

@@ -11,6 +11,8 @@ import com.restaurant.restaurantdemoserver.respository.FoodRepository;
 import com.restaurant.restaurantdemoserver.respository.MenuRepository;
 import com.restaurant.restaurantdemoserver.respository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.service.FoodService;
+import com.restaurant.restaurantdemoserver.service.converter.FoodAllergyConverter;
+import com.restaurant.restaurantdemoserver.service.converter.FoodConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ public class FoodServiceImpl implements FoodService {
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
     private final FoodRepository foodRepository;
+    private final FoodAllergyConverter foodAllergyConverter;
+    private final FoodConverter foodConverter;
 
     @Override
     public Set<FoodDto> getStartersByLogin(String login) {
@@ -39,7 +43,7 @@ public class FoodServiceImpl implements FoodService {
 
         Set<Food> starters = menu.getStarters();
 
-        return starters.stream().map(this::convertFoodToDto).collect(Collectors.toSet());
+        return starters.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
     @Override
@@ -53,7 +57,7 @@ public class FoodServiceImpl implements FoodService {
 
         Set<Food> soups = menu.getSoups();
 
-        return soups.stream().map(this::convertFoodToDto).collect(Collectors.toSet());
+        return soups.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
     @Override
@@ -67,7 +71,7 @@ public class FoodServiceImpl implements FoodService {
 
         Set<Food> mainCourses = menu.getMainCourses();
 
-        return mainCourses.stream().map(this::convertFoodToDto).collect(Collectors.toSet());
+        return mainCourses.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
     @Override
@@ -81,7 +85,7 @@ public class FoodServiceImpl implements FoodService {
 
         Set<Food> desserts = menu.getDesserts();
 
-        return desserts.stream().map(this::convertFoodToDto).collect(Collectors.toSet());
+        return desserts.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
     @Override
@@ -89,7 +93,7 @@ public class FoodServiceImpl implements FoodService {
         Food food = foodRepository.getFoodByPublicId(publicId)
                 .orElseThrow((() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND)));
 
-        return convertFoodToDto(food);
+        return foodConverter.convertFoodToDto(food);
     }
 
     @Override
@@ -97,7 +101,7 @@ public class FoodServiceImpl implements FoodService {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
-        Food inserted = foodRepository.save(convertFoodDtoToEntity(food));
+        Food inserted = foodRepository.save(foodConverter.convertFoodDtoToEntity(food));
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -108,7 +112,7 @@ public class FoodServiceImpl implements FoodService {
 
         menuRepository.save(menu);
 
-        return convertFoodToDto(inserted);
+        return foodConverter.convertFoodToDto(inserted);
     }
 
     @Override
@@ -116,8 +120,7 @@ public class FoodServiceImpl implements FoodService {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
-        Food inserted = foodRepository.save(convertFoodDtoToEntity(food));
-
+        Food inserted = foodRepository.save(foodConverter.convertFoodDtoToEntity(food));
         Long menuId = restaurant.getMenu().getId();
 
         Menu menu = menuRepository.findById(menuId)
@@ -127,7 +130,7 @@ public class FoodServiceImpl implements FoodService {
 
         menuRepository.save(menu);
 
-        return convertFoodToDto(inserted);
+        return foodConverter.convertFoodToDto(inserted);
     }
 
     @Override
@@ -135,7 +138,7 @@ public class FoodServiceImpl implements FoodService {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
-        Food inserted = foodRepository.save(convertFoodDtoToEntity(food));
+        Food inserted = foodRepository.save(foodConverter.convertFoodDtoToEntity(food));
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -146,7 +149,7 @@ public class FoodServiceImpl implements FoodService {
 
         menuRepository.save(menu);
 
-        return convertFoodToDto(inserted);
+        return foodConverter.convertFoodToDto(inserted);
     }
 
     @Override
@@ -154,7 +157,7 @@ public class FoodServiceImpl implements FoodService {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
-        Food inserted = foodRepository.save(convertFoodDtoToEntity(food));
+        Food inserted = foodRepository.save(foodConverter.convertFoodDtoToEntity(food));
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -165,38 +168,8 @@ public class FoodServiceImpl implements FoodService {
 
         menuRepository.save(menu);
 
-        return convertFoodToDto(inserted);
+        return foodConverter.convertFoodToDto(inserted);
     }
 
-    private FoodDto convertFoodToDto(Food food) {
-        return FoodDto.builder()
-                .name(food.getName())
-                .foodAllergies(convertAllergyToDto(food.getFoodAllergies()))
-                .description(food.getDescription())
-                .pictureUrl(food.getPictureUrl())
-                .price(food.getPrice())
-                .rating(food.getRating())
-                .publicId(food.getPublicId())
-                .build();
-    }
 
-    private Set<FoodAllergyDto> convertAllergyToDto(Set<FoodAllergy> allergies) {
-        Set<FoodAllergyDto> allergyDtos = new HashSet<>();
-        allergies.forEach(allergy -> allergyDtos.add(FoodAllergyDto.builder()
-                .name(allergy.getAllergy().toString())
-                .publicId(allergy.getPublicId())
-                .build()));
-
-        return allergyDtos;
-    }
-
-    private Food convertFoodDtoToEntity(FoodDto foodDto) {
-        return Food.builder()
-                .name(foodDto.getName())
-                .description(foodDto.getDescription())
-                .pictureUrl(foodDto.getPictureUrl())
-                .rating(foodDto.getRating())
-                .price(foodDto.getPrice())
-                .build();
-    }
 }

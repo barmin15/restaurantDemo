@@ -69,18 +69,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public RestaurantDto login(LoginDto credentialsDTO) {
+
+
         Restaurant restaurant = restaurantRepository.findByLogin(credentialsDTO.getLogin())
-                .orElseThrow(() -> new AppException("Unknown User", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.getPassword()), restaurant.getPassword())) {
 
             return RestaurantDto.builder()
                     .login(restaurant.getLogin())
-                    .name(restaurant.getName())
-                    .menu(restaurant.getMenu())
-                    .tables(restaurant.getTables())
-                    .latitude(restaurant.getLatitude())
-                    .longitude(restaurant.getLongitude())
                     .build();
         }
 

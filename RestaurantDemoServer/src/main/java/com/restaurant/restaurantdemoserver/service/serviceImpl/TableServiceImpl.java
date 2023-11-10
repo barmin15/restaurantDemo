@@ -9,6 +9,7 @@ import com.restaurant.restaurantdemoserver.respository.MenuRepository;
 import com.restaurant.restaurantdemoserver.respository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.respository.TableRepository;
 import com.restaurant.restaurantdemoserver.service.TableService;
+import com.restaurant.restaurantdemoserver.service.converter.TableConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,25 +22,19 @@ public class TableServiceImpl implements TableService {
     private final RestaurantRepository restaurantRepository;
     private final TableRepository tableRepository;
     private final MenuRepository menuRepository;
+    private final TableConverter tableConverter;
 
     @Override
     public void saveTablesAfterRegister(String login, List<TableDto> tables) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
                 .orElseThrow(()-> new AppException("Unknown Login", HttpStatus.NOT_FOUND));
 
-       // Menu menu = menuRepository.save(Menu.builder().build());
-
-       // restaurant.setMenu(menu);
-        List<Table> tablesList = tables.stream().map(this::convertTableDtoNameToEntityName).toList();
+        List<Table> tablesList = tables.stream().map(tableConverter::convertTableDtoNameToEntityName).toList();
         tablesList.forEach(restaurant::addTable);
 
         restaurantRepository.save(restaurant);
 
     }
 
-    private Table convertTableDtoNameToEntityName(TableDto tableDto){
-        return Table.builder()
-                .tableName(tableDto.getTableName())
-                .build();
-    }
+
 }

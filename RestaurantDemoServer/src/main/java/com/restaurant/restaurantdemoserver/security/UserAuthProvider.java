@@ -47,7 +47,6 @@ public class UserAuthProvider {
 
         RestaurantDto restaurant = authService.findByLogin(decoded.getIssuer());
 
-
         return new UsernamePasswordAuthenticationToken(restaurant, null, Collections.emptyList());
     }
 }

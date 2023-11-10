@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name = "tables")
 @Builder
@@ -21,6 +22,9 @@ public class Table {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID publicId;
 
     private String tableName;
 
