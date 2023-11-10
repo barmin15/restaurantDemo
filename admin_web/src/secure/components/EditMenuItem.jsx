@@ -4,6 +4,7 @@ import "../css/editMenuItem.css";
 import noImagePic from "../../images/scenery.png";
 import { request } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
+import { getFoodCategory, getProductId } from "../../logic/urlLogic";
 
 export default function EditMenuItem() {
   const [menuItem, setMenuItem] = useState({});
@@ -16,8 +17,6 @@ export default function EditMenuItem() {
     e.preventDefault();
     setMenuItem({ ...menuItem, [e.target.name]: e.target.value });
   };
-
-  // image     "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575"
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,36 +35,13 @@ export default function EditMenuItem() {
 
   // image     "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575"
 
-  function getProductId(url) {
-    let result = "";
-    let i = url.lastIndexOf("/") + 1;
-
-    for (i; i < url.length; i++) {
-      result += url[i];
-    }
-    return result;
-  }
-
-  function getFoodCategory(url) {
-    let result = [];
-    let i = url.lastIndexOf("/") - 1;
-
-    for (i; i > 0; i--) {
-      if (url[i] === "/") {
-        return result.join("");
-      } else {
-        result.unshift(url[i]);
-      }
-    }
-  }
-
   useEffect(() => {
-    if (itemId !== "add") {
+    if (itemId !== "create") {
       setMenuItem({
         name: "Toltott Kaposzta",
         price: 5000,
         allergies: [
-          { name: "mushroom", pubId: "335" },
+          { name: "GlutenFree", pubId: "335" },
           { name: "tomato", pubId: "3ered5" },
           { name: "pancake", pubId: "fdfgs" },
           { name: "cheese", pubId: "dsfsts" },
