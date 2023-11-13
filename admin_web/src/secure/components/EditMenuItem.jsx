@@ -77,8 +77,6 @@ export default function EditMenuItem() {
     }
   }
 
-  console.log(menuItem);
-
   return (<>
       {Object.keys(menuItem).length !== 0 && (
 

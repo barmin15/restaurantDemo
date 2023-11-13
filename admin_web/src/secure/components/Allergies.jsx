@@ -16,13 +16,14 @@ export default function Allergies({ handleCheck, allergiesData }) {
       {allergies.map((allergy, index) => (
         <li className="allergy" key={allergy.publicId}>
           <input
+            readOnly
             type="checkbox"
             id={`myCheckbox${index}`}
             name={allergy.name}
             key={allergy.publicId}
             checked={allergiesData.includes(allergy.publicId)}
           />
-          <label className="allergy-label" for={`myCheckbox${index}`}>
+          <label className="allergy-label" htmlFor={`myCheckbox${index}`}>
             <img
               src={require(`/src/images/allergies/${allergy.name}.png`)}
               alt=""

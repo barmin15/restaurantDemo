@@ -1,8 +1,8 @@
-.container * {
+.cont * {
     box-sizing: border-box;
   }
 
-  .container .img{
+  .cont .img{
    zoom: 0.3;
   }
   .imageInput{
@@ -10,7 +10,7 @@
     top: -20vh;
   }
   
-  .container input[type=text], select, textarea {
+  .cont input[type=text], select, textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #2B2730;
@@ -18,13 +18,13 @@
     resize: vertical;
   }
   
- .container label {
+ .cont label {
   color: rgb(233, 225, 225);
     padding: 12px 12px 12px 0;
     display: inline-block;
   }
   
-  .container input[type=submit] {
+  .cont input[type=submit] {
     background-color: #6554AF;
     color: rgb(233, 225, 225);
     padding: 12px 20px;
@@ -34,11 +34,11 @@
     float: right;
   }
   
-  .container input[type=submit]:hover {
+  .cont input[type=submit]:hover {
     background-color: #6554AF;
   }
   
-  .container {
+  .cont {
     border-radius: 10px;
     background-color: #2B2730;
     padding: 20px;

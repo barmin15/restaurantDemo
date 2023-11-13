@@ -23,7 +23,7 @@ export default function Navbar() {
   })
 
   return (<>
-    <nav class="navbar">
+    <nav className="navbar">
       <NavLink className="restaurant">{name}</NavLink>
       <img className="logo" src={imageUrl} alt="logo" />
       <NavLink className="logout" to={"/"}>
@@ -32,11 +32,11 @@ export default function Navbar() {
       <NavLink className="tables" to={"/app/tables"}>
         Tables
       </NavLink>
-      <div class="dropdown">
-        <button class="dropbtn">Menu
-          <i class="fa fa-caret-down"></i>
+      <div className="dropdown">
+        <button className="dropbtn">Menu
+          <i className="fa fa-caret-down"></i>
         </button>
-        <div class="dropdown-content">
+        <div className="dropdown-content">
           <NavLink to={"/app/menu/alcoholic-drinks"}>Alcoholic drinks</NavLink>
           <NavLink to={"/app/menu/non-alcoholic-drinks"}>Non alcoholic drinks</NavLink>
           <NavLink to={"/app/menu/starters"}>Starters</NavLink>
