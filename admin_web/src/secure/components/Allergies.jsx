@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getRequest } from "../../fetch/fetch";
 import "../css/allergies.css";
 
-export default function Allergies({ handleCheck,  }) {
+export default function Allergies({ handleCheck, allergiesData }) {
   const [allergies, setAllergies] = useState([]);
 
   useEffect(() => {
@@ -10,7 +10,6 @@ export default function Allergies({ handleCheck,  }) {
       .then((req) => setAllergies(req.data))
       .catch((err) => console.error(err));
   }, []);
-
 
   return (
     <ul className="allergies">
@@ -21,7 +20,7 @@ export default function Allergies({ handleCheck,  }) {
             id={`myCheckbox${index}`}
             name={allergy.name}
             key={allergy.publicId}
-            checked={allergies.includes(allergy.publicId)}
+            checked={allergiesData.includes(allergy.publicId)}
           />
           <label className="allergy-label" for={`myCheckbox${index}`}>
             <img
