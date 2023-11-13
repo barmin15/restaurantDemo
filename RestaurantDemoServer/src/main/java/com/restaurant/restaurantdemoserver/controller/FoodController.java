@@ -27,7 +27,7 @@ public class FoodController {
     public Set<FoodDto> getSoupsByLogin(@PathVariable String login){
         return foodService.getSoupsByLogin(login);
     }
-    @GetMapping("/mainCourses/{login}")
+    @GetMapping("/main-courses/{login}")
     public Set<FoodDto> getMainCoursesByLogin(@PathVariable String login){
         return foodService.getMainCoursesByLogin(login);
     }
@@ -55,10 +55,6 @@ public class FoodController {
     }
     @PostMapping("/desserts/{login}")
     public FoodDto insertDessert(@PathVariable String login, @RequestBody FoodDto food){
-        System.out.println(food.getFoodAllergies());
-        System.out.println(food.getName());
-        System.out.println(food.getDescription());
-        System.out.println(food.getPictureUrl());
         return foodService.insertDessert(login, food);
     }
 }

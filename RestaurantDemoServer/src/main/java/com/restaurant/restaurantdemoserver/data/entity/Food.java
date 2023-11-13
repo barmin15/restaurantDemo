@@ -3,6 +3,7 @@ package com.restaurant.restaurantdemoserver.data.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.restaurant.restaurantdemoserver.data.helper.MenuItemType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,6 +31,9 @@ public class Food {
     private Double price;
 
     private Integer rating;
+
+    @Enumerated(EnumType.STRING)
+    private MenuItemType menuItemType;
 
     @ManyToMany()
     @JsonManagedReference

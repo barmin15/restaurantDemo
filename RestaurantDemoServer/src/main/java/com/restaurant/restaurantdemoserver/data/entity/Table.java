@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Table {
+public class Table implements Comparable<Table> {
 
     @JsonIgnore
     @Id
@@ -38,14 +38,21 @@ public class Table {
     @JsonBackReference
     private Restaurant restaurant;
 
-    public void addRestaurant(Restaurant restaurant){
+    public void addRestaurant(Restaurant restaurant) {
         restaurant.addTable(this);
     }
 
-    public void addGuest(Guest guest){
-        if(guests == null) guests = new HashSet<>();
+    public void addGuest(Guest guest) {
+        if (guests == null) guests = new HashSet<>();
         guests.add(guest);
         guest.setTable(this);
     }
 
+    @Override
+    public int compareTo(Table o) {
+        if (getId() == null || o.getId() == null) {
+            return 0;
+        }
+        return getId().compareTo(o.getId());
+    }
 }

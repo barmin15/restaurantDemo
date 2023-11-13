@@ -19,12 +19,12 @@ public class DrinkController {
 
     private final DrinkService drinkService;
 
-    @GetMapping("/alcoholic/{login}")
+    @GetMapping("/alcoholic-drinks/{login}")
     public Set<DrinkDto> getAlcoholicDrinksByLogin(@PathVariable String login){
         return drinkService.getAlcoholicDrinksByLogin(login);
     }
 
-    @GetMapping("/nonAlcoholic/{login}")
+    @GetMapping("/non-alcoholic-drinks/{login}")
     public Set<DrinkDto> getNonAlcoholicDrinkByLogin(@PathVariable String login){
         return drinkService.getNonAlcoholicDrinkByLogin(login);
     }

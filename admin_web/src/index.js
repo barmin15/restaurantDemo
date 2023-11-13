@@ -10,7 +10,13 @@ import Tables from "./secure/pages/Tables";
 import Navbar from "./secure/components/Navbar";
 import EditMenuItem from "./secure/components/EditMenuItem";
 import TablesSetup from "./secure/pages/TablesSetub";
-
+import Starterts from "./secure/pages/Starters";
+import Soups from "./secure/pages/Soups";
+import Starters from "./secure/pages/Starters";
+import Desserts from "./secure/pages/Desserts";
+import AlcoholicDrinks from "./secure/pages/AlcoholicDrinks";
+import NonAlcoholicDrinks from "./secure/pages/NonAlcoholicDrinks";
+import MainCourses from "./secure/pages/MainCourse";
 
 const Router = createBrowserRouter([
   {
@@ -26,8 +32,36 @@ const Router = createBrowserRouter([
     element: <Navbar />,
     children: [
       {
+        path: "/app/menu/starters",
+        element: <Starterts />
+      },
+      {
+        path:"/app/menu/soups",
+        element: <Soups/>
+      },
+      {
+        path:"/app/menu/soups",
+        element: <Soups/>
+      },
+      {
+        path:"/app/menu/starters",
+        element: <Starters/>
+      },
+      {
+        path:"/app/menu/main-courses",
+        element: <MainCourses/>
+      },
+      {
+        path:"/app/menu/desserts",
+        element: <Desserts/>
+      },
+      {
         path: "/app/menu/alcoholic-drinks",
-        element: <Menu />,
+        element: <AlcoholicDrinks />,
+      },
+      {
+        path: "/app/menu/non-alcoholic-drinks",
+        element: <NonAlcoholicDrinks />,
       },
       {
         path: "/app/menu/alcoholic-drinks/create",
@@ -38,20 +72,12 @@ const Router = createBrowserRouter([
         element: <EditMenuItem />,
       },
       {
-        path: "/app/menu/non-alcoholic-drinks",
-        element: <Menu />,
-      },
-      {
         path: "/app/menu/non-alcoholic-drinks/create",
         element: <EditMenuItem />,
       },
       {
         path: "/app/menu/non-alcoholic-drinks/:drinkId",
         element: <EditMenuItem />,
-      },
-      {
-        path: "/app/menu/starters",
-        element: <Menu />, 
       },
       {
         path: "/app/menu/starters/create",
@@ -62,10 +88,6 @@ const Router = createBrowserRouter([
         element: <EditMenuItem />,
       },
       {
-        path: "/app/menu/soups",
-        element: <Menu />,
-      },
-      {
         path: "/app/menu/soups/create",
         element: <EditMenuItem />,
       },
@@ -74,20 +96,12 @@ const Router = createBrowserRouter([
         element: <EditMenuItem />,
       },
       {
-        path: "/app/menu/main-courses",
-        element: <Menu />,
-      },
-      {
         path: "/app/menu/main-courses/create",
         element: <EditMenuItem />,
       },
       {
         path: "/app/menu/main-courses/:foodId",
         element: <EditMenuItem />,
-      },
-      {
-        path: "/app/menu/desserts",
-        element: <Menu />,
       },
       {
         path: "/app/menu/desserts/create",
