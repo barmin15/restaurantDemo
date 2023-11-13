@@ -1,0 +1,55 @@
+.butt {
+    border-radius: 8px;
+    position: absolute;
+    top: 14%;
+    left: 83%;
+    margin: -50px 0 0 -50px;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #2B2730;
+    background-color: #2B2730;
+  }
+  
+  .butt, .butt__icon, .butt__text {
+    transition: all 0.3s;
+  }
+  
+  .butt .butt__text {
+    transform: translateX(30px);
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .butt .butt__icon {
+    border-radius: 8px;
+    position: absolute;
+    transform: translateX(109px);
+    height: 100%;
+    width: 39px;
+    background-color: #2B2730;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .butt .svg {
+    width: 30px;
+    stroke: #fff;
+  }
+  
+  .butt:hover {
+    background: #2B2730;
+  }
+  
+  .butt:hover .butt__text {
+    color: transparent;
+  }
+  
+  .butt:hover .butt__icon {
+    width: 148px;
+    transform: translateX(0);
+  }
+  

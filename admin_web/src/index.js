@@ -17,6 +17,7 @@ import Desserts from "./secure/pages/Desserts";
 import AlcoholicDrinks from "./secure/pages/AlcoholicDrinks";
 import NonAlcoholicDrinks from "./secure/pages/NonAlcoholicDrinks";
 import MainCourses from "./secure/pages/MainCourse";
+import CreateMenuItem from "./secure/components/CreateMenuItem";
 
 const Router = createBrowserRouter([
   {
@@ -97,7 +98,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/app/menu/main-courses/create",
-        element: <EditMenuItem />,
+        element: <CreateMenuItem />,
       },
       {
         path: "/app/menu/main-courses/:foodId",
