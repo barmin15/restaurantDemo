@@ -47,13 +47,13 @@ export function SignUp() {
     }
 
     return <div class="form-container sign-up-container">
-        <div id="form">
+        <form id="form">
             <h1>Create Account</h1>
             <input type="text" placeholder="Restaurant Name" onChange={(e) => setRestaurantName(e.target.value)} />
             <input type="email" placeholder="Email" onChange={(e) => setLogin(e.target.value)} style={isInvalidEmail ? { color: '#B22222' } : {}} />
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} style={isWorgPassword ? { color: '#B22222' } : {}} />
             <input type="password" placeholder="Repeat Password" onChange={(e) => setRepeatPassword(e.target.value)} style={isWorgPassword ? { color: '#B22222' } : {}} />
             <button onClick={(e) => onRegister(e)}>Sign Up</button>
-        </div>
+        </form>
     </div>;
 }
