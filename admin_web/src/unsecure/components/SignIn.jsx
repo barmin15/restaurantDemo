@@ -31,13 +31,13 @@ export function SignIn() {
 
 
   return <div className="form-container sign-in-container">
-                <div id="form">
+                <form id="form">
                     <h1>Sign in </h1>
                     <input type="email" placeholder="Email" onChange={(e) => setLogin(e.target.value)}/>
                     <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
                     <a id="a">Forgot your password?</a>
                     <button onClick={(e) => onLogin(e)}>Sign In</button>
-                </div>
+                </form>
             </div>;
 }
     

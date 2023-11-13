@@ -24,8 +24,8 @@ export default function CreateMenuItem() {
     const food = {
       name,
       price,
-      allergies,
-      description,
+      foodAllergies: allergies,
+      description: description,
       imgUrl,
     };
 
