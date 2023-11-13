@@ -58,7 +58,7 @@ public class FoodController {
         return foodService.insertDessert(login, food);
     }
 
-    @PutMapping("update/{publicId}")
+    @PutMapping("/update/{publicId}")
     public FoodDto updateFoodByPublicId(@PathVariable UUID publicId, @RequestBody FoodDto foodDto){
         return foodService.updateByPublicId(publicId, foodDto);
     }
