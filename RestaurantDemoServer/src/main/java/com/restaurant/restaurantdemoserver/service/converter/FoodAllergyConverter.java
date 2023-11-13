@@ -3,10 +3,9 @@ package com.restaurant.restaurantdemoserver.service.converter;
 import com.restaurant.restaurantdemoserver.data.dto.FoodAllergyDto;
 import com.restaurant.restaurantdemoserver.data.entity.FoodAllergy;
 import com.restaurant.restaurantdemoserver.exception.AppException;
-import com.restaurant.restaurantdemoserver.respository.FoodAllergyRepository;
+import com.restaurant.restaurantdemoserver.repository.FoodAllergyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -32,9 +31,12 @@ public class FoodAllergyConverter {
     public Set<FoodAllergy> convertFoodAllergyDtoToEntity(Set<FoodAllergyDto> foodAllergyDto){
         Set<UUID> publicIds = new HashSet<>();
 
-        foodAllergyDto.forEach(foodAllergy -> publicIds.add(foodAllergy.getPublicId()));
+        if(foodAllergyDto != null){
+            foodAllergyDto.forEach(foodAllergy -> publicIds.add(foodAllergy.getPublicId()));
 
-        return foodAllergyRepository.getFoodAllergiesByPublicIdIsIn(publicIds)
-                .orElseThrow(() -> new AppException("Unknown FoodAllergy PulicId", HttpStatus.NOT_FOUND));
+            return foodAllergyRepository.getFoodAllergiesByPublicIdIsIn(publicIds)
+                    .orElseThrow(() -> new AppException("Unknown FoodAllergy Public id", HttpStatus.NOT_FOUND));
+        }
+        return new HashSet<>();
     }
 }

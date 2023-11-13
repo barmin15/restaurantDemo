@@ -1,20 +1,20 @@
 package com.restaurant.restaurantdemoserver.service.serviceImpl;
 
 import com.restaurant.restaurantdemoserver.data.dto.TableDto;
-import com.restaurant.restaurantdemoserver.data.entity.Menu;
+import com.restaurant.restaurantdemoserver.data.dto.TablePageDto;
 import com.restaurant.restaurantdemoserver.data.entity.Restaurant;
 import com.restaurant.restaurantdemoserver.data.entity.Table;
 import com.restaurant.restaurantdemoserver.exception.AppException;
-import com.restaurant.restaurantdemoserver.respository.MenuRepository;
-import com.restaurant.restaurantdemoserver.respository.RestaurantRepository;
-import com.restaurant.restaurantdemoserver.respository.TableRepository;
+import com.restaurant.restaurantdemoserver.repository.MenuRepository;
+import com.restaurant.restaurantdemoserver.repository.RestaurantRepository;
+import com.restaurant.restaurantdemoserver.repository.TableRepository;
 import com.restaurant.restaurantdemoserver.service.TableService;
 import com.restaurant.restaurantdemoserver.service.converter.TableConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,8 +44,36 @@ public class TableServiceImpl implements TableService {
 
         Long restaurantId = restaurant.getId();
 
-        return tableRepository.getAllByRestaurantId(restaurantId).stream()
-                .map(tableConverter::convertTableEntityToDto).collect(Collectors.toList());
+        List<Table> tables = tableRepository.getAllByRestaurantId(restaurantId);
+
+        Collections.sort(tables);
+
+        return tables.stream().map(tableConverter::convertTableEntityToDto).toList();
+    }
+
+    @Override
+    public TablePageDto nthPageOfTablesByLogin(int page, String login) {
+        Restaurant restaurant = restaurantRepository.findByLogin(login)
+                .orElseThrow(()-> new AppException("Unknown Login", HttpStatus.NOT_FOUND));
+
+        Long restaurantId = restaurant.getId();
+
+        List<Table> tables = tableRepository.getAllByRestaurantId(restaurantId);
+
+        Collections.sort(tables);
+
+        TablePageDto tablePageDto = TablePageDto.builder().allTableCount(tables.size()).build();
+
+        List<TableDto> tableDtos = new ArrayList<>();
+
+        for(int i = 0; i < page; i++){
+            if(i < tables.size()){
+                tableDtos.add(tableConverter.convertTableEntityToDto(tables.get(i)));
+            }
+        }
+
+        tablePageDto.setTables(tableDtos);
+        return tablePageDto;
     }
 
 

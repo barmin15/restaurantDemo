@@ -22,6 +22,7 @@ public class RestaurantDemoServerApplication {
     public void configure(){
        databaseConfig.createFoodAllergies();
        databaseConfig.createRestaurant();
+       databaseConfig.addFoodToPizzaMe();
     }
 
 

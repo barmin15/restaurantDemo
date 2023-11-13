@@ -1,4 +1,4 @@
-package com.restaurant.restaurantdemoserver.respository;
+package com.restaurant.restaurantdemoserver.repository;
 
 import com.restaurant.restaurantdemoserver.data.entity.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;

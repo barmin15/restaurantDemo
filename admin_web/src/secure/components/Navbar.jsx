@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
-import { Outlet } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -13,39 +13,39 @@ export default function Navbar() {
   );
 
   useEffect(() => {
-    getRequest(`api/restaurant/${getUserLogin()}`)
+    getRequest(`/api/restaurant/${getUserLogin()}`)
       .then((response) => {
         const restaurant = response.data;
         setName(restaurant.name);
         restaurant.imageUrl !== null && setImageUrl(restaurant.imageUrl);
       })
-      .catch((error) => console.log(error))
+      .catch((error) => navigate("/"))
   })
 
   return (<>
-    <div class="navbar">
-      <a className="restaurant">{name}</a>
+    <nav class="navbar">
+      <NavLink className="restaurant">{name}</NavLink>
       <img className="logo" src={imageUrl} alt="logo" />
-      <a className="logout" onClick={() => navigate("/")}>
+      <NavLink className="logout" to={"/"}>
         Log out
-      </a>
-      <a className="tables" onClick={() => navigate("/app/tables")}>
-      Tables
-    </a>
+      </NavLink>
+      <NavLink className="tables" to={"/app/tables"}>
+        Tables
+      </NavLink>
       <div class="dropdown">
         <button class="dropbtn">Menu
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a>Alcoholic drinks</a>
-          <a>Non alcoholic drinks</a>
-          <a>Starters</a>
-          <a>Soups</a>
-          <a>Main courses</a>
-          <a>Desserts</a>
+          <NavLink to={"/app/menu/alcoholic-drinks"}>Alcoholic drinks</NavLink>
+          <NavLink to={"/app/menu/non-alcoholic-drinks"}>Non alcoholic drinks</NavLink>
+          <NavLink to={"/app/menu/starters"}>Starters</NavLink>
+          <NavLink to={"/app/menu/soups"}>Soups</NavLink>
+          <NavLink to={"/app/menu/main-courses"}>Main courses</NavLink>
+          <NavLink to={"/app/menu/desserts"}>Desserts</NavLink>
         </div>
       </div>
-    </div>
+    </nav>
     <Outlet />
   </>)
 }

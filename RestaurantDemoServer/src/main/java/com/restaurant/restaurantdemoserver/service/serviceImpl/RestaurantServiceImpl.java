@@ -3,7 +3,7 @@ package com.restaurant.restaurantdemoserver.service.serviceImpl;
 import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import com.restaurant.restaurantdemoserver.data.entity.Restaurant;
 import com.restaurant.restaurantdemoserver.exception.AppException;
-import com.restaurant.restaurantdemoserver.respository.RestaurantRepository;
+import com.restaurant.restaurantdemoserver.repository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.service.RestaurantService;
 import com.restaurant.restaurantdemoserver.service.converter.MenuConverter;
 import com.restaurant.restaurantdemoserver.service.converter.TableConverter;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

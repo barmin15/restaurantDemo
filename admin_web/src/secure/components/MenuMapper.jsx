@@ -12,14 +12,14 @@ export default function MenuMapper({ data }) {
             return (key !== "publicId" && <th key={i}>{key.toUpperCase()}</th>)
         })
         const tableBody = [];
-    
+
         data.forEach((e, i) => {
             tableBody.push(
                 <tr key={i}>
                     {Object.keys(e).map(key => {
-                        if(key === "rating"){
+                        if (key === "rating") {
                             return <td>{convertRatings(e[key])}</td>
-                        } else if( key !== "publicId"){
+                        } else if (key !== "publicId") {
                             return <td>{e[key]}</td>
                         }
                     })}
@@ -31,11 +31,11 @@ export default function MenuMapper({ data }) {
 
         setHead(tableHeader);
         setBody(tableBody);
-    }, [])
+    }, [data])
 
 
     return (
-        <>
+        <div className="tableFixHead">
             <table className="table">
                 <thead>
                     <tr>
@@ -48,6 +48,6 @@ export default function MenuMapper({ data }) {
                     {body}
                 </tbody>
             </table>
-        </>
+        </div>
     )
 }

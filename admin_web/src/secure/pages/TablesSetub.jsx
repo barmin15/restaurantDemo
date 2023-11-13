@@ -1,11 +1,13 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../css/tableSetup.css"
 import MenuMapper from "../components/MenuMapper";
 import { request } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
+import { useNavigate } from "react-router-dom";
 
 export default function TablesSetup() {
+  const navigate = useNavigate();
   const [amount, setAmount] = useState(null);
   const [tables, setTables] = useState();
   const [isInput, setIsInput] = useState(true);
@@ -28,8 +30,8 @@ export default function TablesSetup() {
   function onSubmitTables(e) {
     e.preventDefault();
     request("POST", `/api/table/register/${getUserLogin()}`, tables)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .then((response) => navigate("/app/tables"))
+      .catch((error) => navigate("/"));
   }
 
   return (isInput ?

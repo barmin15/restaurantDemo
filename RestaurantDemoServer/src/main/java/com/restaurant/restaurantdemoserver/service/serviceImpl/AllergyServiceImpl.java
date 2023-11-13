@@ -1,16 +1,13 @@
 package com.restaurant.restaurantdemoserver.service.serviceImpl;
 
 import com.restaurant.restaurantdemoserver.data.dto.FoodAllergyDto;
-import com.restaurant.restaurantdemoserver.data.entity.FoodAllergy;
-import com.restaurant.restaurantdemoserver.respository.FoodAllergyRepository;
+import com.restaurant.restaurantdemoserver.repository.FoodAllergyRepository;
 import com.restaurant.restaurantdemoserver.service.AllergyService;
 import com.restaurant.restaurantdemoserver.service.converter.FoodAllergyConverter;
-import jakarta.persistence.SecondaryTable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
