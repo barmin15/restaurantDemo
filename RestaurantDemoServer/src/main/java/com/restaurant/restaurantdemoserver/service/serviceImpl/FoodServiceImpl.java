@@ -98,6 +98,7 @@ public class FoodServiceImpl implements FoodService {
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Starter);
+        converted.setPublicId(UUID.randomUUID());
 
         Food inserted = foodRepository.save(converted);
 
@@ -120,6 +121,7 @@ public class FoodServiceImpl implements FoodService {
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Soup);
+        converted.setPublicId(UUID.randomUUID());
 
         Food inserted = foodRepository.save(converted);
         Long menuId = restaurant.getMenu().getId();
@@ -141,6 +143,7 @@ public class FoodServiceImpl implements FoodService {
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Main_Course);
+        converted.setPublicId(UUID.randomUUID());
 
         Food inserted = foodRepository.save(converted);
 
@@ -163,6 +166,7 @@ public class FoodServiceImpl implements FoodService {
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Dessert);
+        converted.setPublicId(UUID.randomUUID());
 
         Food inserted = foodRepository.save(converted);
 
