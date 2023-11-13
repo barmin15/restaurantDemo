@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import "../css/menuMapper.css"
+import { useNavigate, useLocation } from "react-router";
 
 export default function MenuMapper({ data }) {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [head, setHead] = useState(null);
     const [body, setBody] = useState(null);
 
@@ -23,7 +28,7 @@ export default function MenuMapper({ data }) {
                             return <td>{e[key]}</td>
                         }
                     })}
-                    <td id={e.publicId}>edit</td>
+                    <td id={e.publicId} onClick={(e) => navigate(`${location.pathname}/${e.target.id}`)}>edit</td>
                     <td id={e.publicId}>remove</td>
                 </tr>
             )
@@ -32,7 +37,6 @@ export default function MenuMapper({ data }) {
         setHead(tableHeader);
         setBody(tableBody);
     }, [data])
-
 
     return (
         <div className="tableFixHead">
