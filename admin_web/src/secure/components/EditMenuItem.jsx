@@ -1,71 +1,49 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../css/editMenuItem.css";
 import noImagePic from "../../images/scenery.png";
-import { request } from "../../fetch/fetch";
+import { request, getRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { getFoodCategory, getProductId } from "../../logic/urlLogic";
 import Allergies from "./Allergies.jsx";
+import Loading from "../../unsecure/pages/Loading.jsx"
+
 
 export default function EditMenuItem() {
-  const [menuItem, setMenuItem] = useState({});
 
+  const [menuItem, setMenuItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
   const location = useLocation();
+
   let itemId = getProductId(location.pathname);
-  let foodCategory = getFoodCategory(location.pathname);
 
   const handleChange = (e) => {
     e.preventDefault();
     setMenuItem({ ...menuItem, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    getRequest(`/api/food/${itemId}`)
+      .then(res => setMenuItem(res.data))
+      .catch(err => navigate("/"));
+  }, []);
+
+  useEffect(() => {
+    menuItem !== null && setLoading(false);
+  },[menuItem])
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let body = {};
-    body.name = menuItem.name;
-    body.description = menuItem.description;
-    body.allergies = [];
-    body.price = menuItem.price;
-    body.pictureUrl = menuItem.pictureUrl;
 
-    request("POST", `/api/food/${foodCategory}/${getUserLogin()}`, body)
+    console.log(menuItem);
+
+    request("PUT", `/api/food/update/${menuItem.publicId}`, menuItem)
       .then((res) => console.log(res))
       .catch(error => console.error(error));
     };
-
-  // image     "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575"
-
-  useEffect(() => {
-    if (itemId !== "create") {
-      setMenuItem({
-        name: "Toltott Kaposzta",
-        price: 5000,
-        allergies: [
-          { name: "GlutenFree", pubId: "335" },
-          { name: "tomato", pubId: "3ered5" },
-          { name: "pancake", pubId: "fdfgs" },
-          { name: "cheese", pubId: "dsfsts" },
-          { name: "milk", pubId: "335ewf" },
-        ],
-        description:
-          "m has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets con",
-        imgUrl:
-          "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/278/278858/mushrooms-in-a-bowel-on-a-dark-table.jpg?w=1575",
-        pubId: "4543gdfsddwatet",
-      });
-    } else {
-      setMenuItem({
-        name: "",
-        price: 0,
-        allergies: [],
-        description: "",
-        imgUrl: "",
-        pubId: "",
-      });
-    }
-  }, []);
-
 
   const handleCheck = (e) => {
     e.preventDefault();
@@ -77,8 +55,88 @@ export default function EditMenuItem() {
     }
   }
 
-  return (<>
-      {Object.keys(menuItem).length !== 0 && (
+  return ( loading ? <Loading /> :
+    <div className="cont">
+      <form onChange={handleChange}>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="fname">Name</label>
+          </div>
+          <div className="col-75">
+            <input
+              type="text"
+              id="fname"
+              name="name"
+              value={menuItem.name}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="price">Price</label>
+          </div>
+          <div className="col-75">
+            <input
+              type="text"
+              id="lname"
+              name="price"
+              value={menuItem.price}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="allergies">Allergies</label>
+          </div>
+          {/* <div className="col-75">
+            <Allergies
+              handleCheck={handleCheck}
+              allergiesData={menuItem.allergies.length > 0 && menuItem.allergies.map((allergy) => allergy.publicId)}
+            />
+          </div> */}
+        </div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="img">Select image:</label>
+          </div>
+          <div className="col-75">
+            <input
+              className="img"
+              type="file"
+              id="img"
+              name="img"
+              accept="image/*"
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="desc">Description</label>
+          </div>
+          <div className="col-75">
+            <textarea
+              id="subject"
+              name="description"
+              style={{ height: "200px" }}
+              value={menuItem.description}
+            ></textarea>
+          </div>
+        </div>
+        <div className="row">
+          <input
+            onClick={(e) => handleSubmit(e)}
+            type="submit"
+            value="Submit"
+          />
+        </div>
+      </form>
+    </div>
+
+  );
+}
+
+
+{/* {Object.keys(menuItem).length !== 0 && (
 
 
         <form
@@ -89,7 +147,7 @@ export default function EditMenuItem() {
           <label htmlFor="name">Name:</label>
           <input name="name" id="name" value={menuItem.name} />
           <label htmlFor="">Price:</label>
-          <input name="price" id="price" value={menuItem.price} />
+          <input name="price" id="price" value={menuItem.price} /> */}
 
           {/* <label htmlFor="allergies">Choose allergies:</label> */}
           {/* <select name="allergies" id="allergies">
@@ -101,17 +159,17 @@ export default function EditMenuItem() {
               ))}
           </select> */}
 
-          <label htmlFor="">Description:</label>
+          {/* <label htmlFor="">Description:</label>
 
           <textarea
             name="description"
             value={menuItem.description}
-          />
+          /> */}
 
-          <Allergies handleCheck={handleCheck} allergiesData={menuItem.allergies}/>
+          {/* //<Allergies handleCheck={handleCheck} allergiesData={menuItem.allergies}/> */}
 
 
-          <br />
+          {/* <br />
           {menuItem.imgUrl !== "" && (
             <input
               type="image"
@@ -124,8 +182,4 @@ export default function EditMenuItem() {
           {menuItem.imgUrl === "" && <input type="file"></input>}
           <button>Submit</button>
         </form>
-      )}
-    </>
-
-  );
-}
+      )} */}
