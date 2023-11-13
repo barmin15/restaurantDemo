@@ -70,6 +70,7 @@ public class DrinkServiceImpl implements DrinkService {
 
         Drink converted = drinkConverter.convertDrinkDtoToEntity(drink);
         converted.setMenuItemType(MenuItemType.Alcoholic_Drink);
+        converted.setPublicId(UUID.randomUUID());
 
         Drink inserted = drinkRepository.save(converted);
 
@@ -92,6 +93,7 @@ public class DrinkServiceImpl implements DrinkService {
 
         Drink converted = drinkConverter.convertDrinkDtoToEntity(drink);
         converted.setMenuItemType(MenuItemType.Non_Alcoholic_Drink);
+        converted.setPublicId(UUID.randomUUID());
 
         Drink inserted = drinkRepository.save(converted);
 
