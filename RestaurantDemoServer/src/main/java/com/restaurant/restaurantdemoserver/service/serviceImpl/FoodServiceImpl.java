@@ -39,7 +39,7 @@ public class FoodServiceImpl implements FoodService {
         Long menuId = restaurant.getMenu().getId();
 
         Set<Food> starters = foodRepository.getAllByMenu_IdAndMenuItemType(menuId, MenuItemType.Starter)
-                .orElseThrow(()-> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
 
         return starters.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
@@ -52,7 +52,7 @@ public class FoodServiceImpl implements FoodService {
         Long menuId = restaurant.getMenu().getId();
 
         Set<Food> soups = foodRepository.getAllByMenu_IdAndMenuItemType(menuId, MenuItemType.Soup)
-                .orElseThrow(()-> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
 
         return soups.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
@@ -65,7 +65,7 @@ public class FoodServiceImpl implements FoodService {
         Long menuId = restaurant.getMenu().getId();
 
         Set<Food> mainCourses = foodRepository.getAllByMenu_IdAndMenuItemType(menuId, MenuItemType.Main_Course)
-                .orElseThrow(()-> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
 
         return mainCourses.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
@@ -78,7 +78,7 @@ public class FoodServiceImpl implements FoodService {
         Long menuId = restaurant.getMenu().getId();
 
         Set<Food> desserts = foodRepository.getAllByMenu_IdAndMenuItemType(menuId, MenuItemType.Dessert)
-                .orElseThrow(()-> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
 
         return desserts.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
@@ -180,6 +180,23 @@ public class FoodServiceImpl implements FoodService {
         menuRepository.save(menu);
 
         return foodConverter.convertFoodToDto(inserted);
+    }
+
+    @Override
+    public FoodDto updateByPublicId(UUID publicId, FoodDto foodDto) {
+        Food food1 = foodConverter.convertFoodDtoToEntity(foodDto);
+
+        Food food = foodRepository.getFoodByPublicId(publicId)
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+
+        food.setName(food1.getName());
+        food.setFoodAllergies(food1.getFoodAllergies());
+        food.setDescription(food1.getDescription());
+        food.setPrice(food1.getPrice());
+
+        food = foodRepository.save(food);
+
+        return foodConverter.convertFoodToDto(food);
     }
 
 
