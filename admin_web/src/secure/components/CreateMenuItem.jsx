@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../css/createMenuItem.css";
 import noImagePic from "../../images/scenery.png";
-import { request, getRequest } from "../../fetch/fetch";
+import { request } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
-import { getFoodCategory, getProductId } from "../../logic/urlLogic";
+import { getFoodCategory } from "../../logic/urlLogic";
 import Allergies from "./Allergies";
-import { all } from "axios";
 
 export default function CreateMenuItem() {
   const location = useLocation();
