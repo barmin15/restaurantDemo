@@ -5,6 +5,7 @@ import noImagePic from "../../images/scenery.png";
 import { request } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { getFoodCategory, getProductId } from "../../logic/urlLogic";
+import Allergies from "./Allergies.jsx";
 
 export default function EditMenuItem() {
   const [menuItem, setMenuItem] = useState({});
@@ -65,6 +66,19 @@ export default function EditMenuItem() {
     }
   }, []);
 
+
+  const handleCheck = (e) => {
+    e.preventDefault();
+
+    if (!menuItem.allergies.includes(e.target.id)) {
+      setMenuItem({...menuItem, allergies: [...menuItem.allergies, e.target.id]});
+    } else {
+      setMenuItem({...menuItem, allergies: menuItem.allergies.filter(allergy => allergy !== e.target.id)})
+    }
+  }
+
+  console.log(menuItem);
+
   return (<>
       {Object.keys(menuItem).length !== 0 && (
 
@@ -78,16 +92,16 @@ export default function EditMenuItem() {
           <input name="name" id="name" value={menuItem.name} />
           <label htmlFor="">Price:</label>
           <input name="price" id="price" value={menuItem.price} />
-          <label htmlFor="allergies">Choose allergies:</label>
 
-          <select name="allergies" id="allergies">
+          {/* <label htmlFor="allergies">Choose allergies:</label> */}
+          {/* <select name="allergies" id="allergies">
             {menuItem.allergies.length !== 0 &&
               menuItem.allergies.map((item) => (
                 <option key={item.pubId} value={item.name}>
                   {item.name}
                 </option>
               ))}
-          </select>
+          </select> */}
 
           <label htmlFor="">Description:</label>
 
@@ -95,6 +109,9 @@ export default function EditMenuItem() {
             name="description"
             value={menuItem.description}
           />
+
+          <Allergies handleCheck={handleCheck} allergiesData={menuItem.allergies}/>
+
 
           <br />
           {menuItem.imgUrl !== "" && (
@@ -111,5 +128,6 @@ export default function EditMenuItem() {
         </form>
       )}
     </>
+
   );
 }
