@@ -14,4 +14,5 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     Optional<Food> getFoodByPublicId(UUID publicId);
 
     Optional<Set<Food>> getAllByMenu_IdAndMenuItemType(Long menuId, MenuItemType menuItemType);
+
 }

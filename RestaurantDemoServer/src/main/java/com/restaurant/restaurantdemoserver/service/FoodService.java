@@ -27,4 +27,6 @@ public interface FoodService {
     FoodDto insertMaincourse(String login, FoodDto food);
 
     FoodDto insertDessert(String login, FoodDto food);
+
+    FoodDto updateByPublicId(UUID publicId, FoodDto foodDto);
 }
