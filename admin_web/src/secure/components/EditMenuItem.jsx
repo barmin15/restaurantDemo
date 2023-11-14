@@ -4,10 +4,9 @@ import "../css/editMenuItem.css";
 import noImagePic from "../../images/scenery.png";
 import { request, getRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
-import { getFoodCategory, getProductId } from "../../logic/urlLogic";
+import { getFoodCategory, getProductId, getSourcePath } from "../../logic/urlLogic";
 import Allergies from "./Allergies.jsx";
 import Loading from "../../unsecure/pages/Loading.jsx"
-
 
 export default function EditMenuItem() {
 
@@ -37,21 +36,19 @@ export default function EditMenuItem() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
-    console.log(menuItem);
-
     request("PUT", `/api/food/update/${menuItem.publicId}`, menuItem)
-      .then((res) => console.log(res))
+      .then((res) => navigate(getSourcePath(location.pathname)))
       .catch(error => console.error(error));
-    };
 
+  };
+  
   const handleCheck = (e) => {
     e.preventDefault();
 
-    if (!menuItem.allergies.includes(e.target.id)) {
-      setMenuItem({...menuItem, allergies: [...menuItem.allergies, e.target.id]});
+    if (!menuItem.allergies.map((element) => element.publicId).includes(e.target.id)) {
+      setMenuItem({...menuItem, allergies: [...menuItem.allergies, { publicId: e.target.id }]});
     } else {
-      setMenuItem({...menuItem, allergies: menuItem.allergies.filter(allergy => allergy !== e.target.id)})
+      setMenuItem({...menuItem, allergies: menuItem.allergies.filter(a => a.publicId !== e.target.id)})
     }
   }
 
@@ -88,12 +85,12 @@ export default function EditMenuItem() {
           <div className="col-25">
             <label htmlFor="allergies">Allergies</label>
           </div>
-          {/* <div className="col-75">
+          <div className="col-75">
             <Allergies
               handleCheck={handleCheck}
-              allergiesData={menuItem.allergies.length > 0 && menuItem.allergies.map((allergy) => allergy.publicId)}
+              allergiesData={menuItem.allergies.map((allergy) => allergy.publicId)}
             />
-          </div> */}
+          </div>
         </div>
         <div className="row">
           <div className="col-25">
@@ -134,52 +131,3 @@ export default function EditMenuItem() {
 
   );
 }
-
-
-{/* {Object.keys(menuItem).length !== 0 && (
-
-
-        <form
-          className="editMenuForm"
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor="name">Name:</label>
-          <input name="name" id="name" value={menuItem.name} />
-          <label htmlFor="">Price:</label>
-          <input name="price" id="price" value={menuItem.price} /> */}
-
-          {/* <label htmlFor="allergies">Choose allergies:</label> */}
-          {/* <select name="allergies" id="allergies">
-            {menuItem.allergies.length !== 0 &&
-              menuItem.allergies.map((item) => (
-                <option key={item.pubId} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-          </select> */}
-
-          {/* <label htmlFor="">Description:</label>
-
-          <textarea
-            name="description"
-            value={menuItem.description}
-          /> */}
-
-          {/* //<Allergies handleCheck={handleCheck} allergiesData={menuItem.allergies}/> */}
-
-
-          {/* <br />
-          {menuItem.imgUrl !== "" && (
-            <input
-              type="image"
-              src={menuItem.imgUrl}
-              alt="Submit"
-              width="48"
-              height="48"
-            ></input>
-          )}
-          {menuItem.imgUrl === "" && <input type="file"></input>}
-          <button>Submit</button>
-        </form>
-      )} */}
