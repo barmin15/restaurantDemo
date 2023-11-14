@@ -13,6 +13,7 @@ import com.restaurant.restaurantdemoserver.repository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.service.FoodService;
 import com.restaurant.restaurantdemoserver.service.converter.FoodAllergyConverter;
 import com.restaurant.restaurantdemoserver.service.converter.FoodConverter;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -197,6 +198,12 @@ public class FoodServiceImpl implements FoodService {
         food = foodRepository.save(food);
 
         return foodConverter.convertFoodToDto(food);
+    }
+
+    @Transactional
+    @Override
+    public void deleteByPublicId(UUID publicId) {
+        foodRepository.removeByPublicId(publicId);
     }
 
 
