@@ -20,3 +20,7 @@ export function getFoodCategory(url) {
     }
     return result;
   }
+
+  export function getSourcePath(url) {
+    return url.slice(0, url.lastIndexOf("/"));
+  }
