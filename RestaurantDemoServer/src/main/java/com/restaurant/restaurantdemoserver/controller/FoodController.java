@@ -51,11 +51,6 @@ public class FoodController {
     }
     @PostMapping("/main-courses/{login}")
     public FoodDto insertMaincourse(@PathVariable String login, @RequestBody FoodDto food){
-        System.out.println("\n");
-        System.out.println("\n");
-        System.out.println("\n");
-        System.out.println("\n");
-        System.out.println(food.toString());
         return foodService.insertMaincourse(login, food);
     }
     @PostMapping("/desserts/{login}")
@@ -66,5 +61,10 @@ public class FoodController {
     @PutMapping("/update/{publicId}")
     public FoodDto updateFoodByPublicId(@PathVariable UUID publicId, @RequestBody FoodDto foodDto){
         return foodService.updateByPublicId(publicId, foodDto);
+    }
+
+    @DeleteMapping("/delete/{publicId}")
+    public void deleteByPublicId(@PathVariable UUID publicId){
+        foodService.deleteByPublicId(publicId);
     }
 }

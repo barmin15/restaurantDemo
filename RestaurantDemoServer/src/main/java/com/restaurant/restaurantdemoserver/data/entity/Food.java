@@ -57,4 +57,12 @@ public class Food {
         if(foodAllergies == null) foodAllergies = new HashSet<>();
 
     }
+
+    @PreRemove
+    private void removeAssociations() {
+       this.menu.getMainCourses().remove(this);
+       for(FoodAllergy foodAllergy : this.foodAllergies) {
+           foodAllergy.getFoods().remove(this);
+       }
+    }
 }

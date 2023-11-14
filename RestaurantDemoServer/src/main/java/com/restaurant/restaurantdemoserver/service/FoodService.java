@@ -29,4 +29,6 @@ public interface FoodService {
     FoodDto insertDessert(String login, FoodDto food);
 
     FoodDto updateByPublicId(UUID publicId, FoodDto foodDto);
+
+    void deleteByPublicId(UUID publicId);
 }
