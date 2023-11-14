@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 .tableFixHead {
   overflow-y: auto; 
   height: 77vh; 
@@ -8,15 +10,17 @@
   top: 0px; 
 }
 
-
-
-
 .table {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   border-collapse: collapse;
   width: 80vw;
   margin-left: auto;
   margin-right: auto;
+}
+
+.val{
+  text-align: center;
+  width: 15vw;
 }
 
 .table tr:nth-child(odd) {
@@ -24,18 +28,18 @@
 }
 
 .table tr:nth-child(even) {
-  background-color: #f6f6f6;
+  background-color: rgb(235, 233, 233);
 }
 
 .table tr:hover {
-  background-color: #ddd;
+  background-color: #A2B29F;
 }
 
 .table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
-  color: #f6f6f6;
+  text-align: center;
+  color: #F8EDE3;
   background-color: #2b2730;
 }
 

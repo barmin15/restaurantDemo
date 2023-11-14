@@ -5,7 +5,6 @@ import { getRequest } from "../../fetch/fetch";
 import MenuMapper from "../components/MenuMapper";
 import { useNavigate } from "react-router-dom";
 import "../css/itemMapper.css";
-import "../css/itemMapper.css";
 import "../css/addItem.css";
 
 export default function MainCourses() {

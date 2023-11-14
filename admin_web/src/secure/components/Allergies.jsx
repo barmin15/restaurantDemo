@@ -25,6 +25,7 @@ export default function Allergies({ handleCheck, allergiesData }) {
           />
           <label className="allergy-label" htmlFor={`myCheckbox${index}`}>
             <img
+              className="allergy-logo"
               src={require(`/src/images/allergies/${allergy.name}.png`)}
               alt=""
               onClick={handleCheck}

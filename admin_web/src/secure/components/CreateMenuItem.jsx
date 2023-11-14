@@ -23,12 +23,10 @@ export default function CreateMenuItem() {
     const food = {
       name,
       price,
-      foodAllergies: allergies,
+      allergies,
       description: description,
       imgUrl,
     };
-
-    console.log(food);
 
     let foodCategory = getFoodCategory(location.pathname);
 

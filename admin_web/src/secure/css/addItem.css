@@ -19,7 +19,7 @@
   
   .butt .butt__text {
     transform: translateX(30px);
-    color: #fff;
+    color: #F8EDE3;
     font-weight: 600;
   }
   
@@ -37,7 +37,7 @@
   
   .butt .svg {
     width: 30px;
-    stroke: #fff;
+    stroke: #F8EDE3;
   }
   
   .butt:hover {

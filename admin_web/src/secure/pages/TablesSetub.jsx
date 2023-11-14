@@ -9,14 +9,6 @@ import { useNavigate } from "react-router-dom";
 export default function TablesSetup() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState(null);
-  const [tables, setTables] = useState();
-  const [isInput, setIsInput] = useState(true);
-
-  function onSubmit(e) {
-    e.preventDefault();
-    setTables(createTables(amount));
-    setIsInput(false);
-  }
 
   function createTables(num) {
     const createdTables = [];
@@ -29,20 +21,14 @@ export default function TablesSetup() {
 
   function onSubmitTables(e) {
     e.preventDefault();
-    request("POST", `/api/table/register/${getUserLogin()}`, tables)
+    request("POST", `/api/table/register/${getUserLogin()}`, createTables(amount))
       .then((response) => navigate("/app/tables"))
       .catch((error) => navigate("/"));
   }
 
-  return (isInput ?
-    <form className="input-group" onSubmit={(e) => onSubmit(e)}>
-      <div className="tablesEnter">Enter the amount of tables your restaurant has</div>
-      <input required="" type="number" name="numberOfTables" autoComplete="off" className="input" onChange={(e) => setAmount(e.target.value)} />
-      <input type="submit" hidden />
-    </form >
-    :
-    <div className="tables">
-      <MenuMapper data={tables} />
-      <button className="submitTables" onClick={(e) => onSubmitTables(e)}>submit</button>
-    </div>)
+  return (<form className="input-group" onSubmit={(e) => onSubmitTables(e)}>
+    <div className="tablesEnter">Enter the amount of tables your restaurant has</div>
+    <input required="" type="number" name="numberOfTables" autoComplete="off" className="input" onChange={(e) => setAmount(e.target.value)} />
+    <input type="submit" hidden />
+  </form >)
 }

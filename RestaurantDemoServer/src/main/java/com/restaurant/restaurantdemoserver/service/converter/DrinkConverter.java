@@ -15,7 +15,7 @@ public class DrinkConverter {
     public DrinkDto convertDrinkToDto(Drink drink) {
         return DrinkDto.builder()
                 .name(drink.getName())
-                .drinkAllergies(foodAllergyConverter.convertAllergyEntityToDto(drink.getDrinkAllergies()))
+                .allergies(foodAllergyConverter.convertAllergyEntityToDto(drink.getDrinkAllergies()))
                 .description(drink.getDescription())
                 .pictureUrl(drink.getPictureUrl())
                 .price(drink.getPrice())
@@ -27,7 +27,7 @@ public class DrinkConverter {
     public Drink convertDrinkDtoToEntity(DrinkDto drink) {
         return Drink.builder()
                 .name(drink.getName())
-                .drinkAllergies(foodAllergyConverter.convertFoodAllergyDtoToEntity(drink.getDrinkAllergies()))
+                .drinkAllergies(foodAllergyConverter.convertFoodAllergyDtoToEntity(drink.getAllergies()))
                 .description(drink.getDescription())
                 .pictureUrl(drink.getPictureUrl())
                 .rating(drink.getRating())
