@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../css/createMenuItem.css";
 import noImagePic from "../../images/scenery.png";
 import { request } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
-import { getFoodCategory } from "../../logic/urlLogic";
+import { getFoodCategory, getSourcePath } from "../../logic/urlLogic";
 import Allergies from "./Allergies";
 
 export default function CreateMenuItem() {
@@ -16,7 +16,7 @@ export default function CreateMenuItem() {
   const [description, setDescription] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
 
-  console.log(allergies);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,20 +24,20 @@ export default function CreateMenuItem() {
       name,
       price,
       allergies,
-      description: description,
+      description,
       imgUrl,
     };
 
     let foodCategory = getFoodCategory(location.pathname);
 
     request("POST", `/api/food/${foodCategory}/${getUserLogin()}`, food)
-      .then((res) => console.log(res))
+      .then((res) =>  navigate(getSourcePath(location.pathname)))
       .catch((error) => console.error(error));
   };
 
   const handleCheck = (e) => {
     e.preventDefault();
-    if (!allergies.map((e) => e.publicId).includes(e.target.id)) {
+    if (!allergies.map((element) => element.publicId).includes(e.target.id)) {
       setAllergies([...allergies, { publicId: e.target.id }]);
     } else {
       setAllergies([...allergies.filter((a) => a.publicId !== e.target.id)]);
