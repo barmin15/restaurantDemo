@@ -1,5 +1,7 @@
 .allergies {
   list-style-type: none;
+  background-color: #ddd;
+  border-radius: 10px;
 }
 
 .allergy {
@@ -12,7 +14,6 @@ input[type="checkbox"][id^="myCheckbox"]{
 }
 
 .allergy-label {
-  padding: 10px;
   display: block;
   position: relative;
   margin: 10px;
@@ -39,8 +40,8 @@ input[type="checkbox"][id^="myCheckbox"]{
 }
 
 .allergy-label img {
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   transition-duration: 0.2s;
   transform-origin: 50% 50%;
 }

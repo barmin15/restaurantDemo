@@ -21,9 +21,9 @@ export function SignIn() {
                 .then((response) => {
                     setUserLogin(response.data.login)
                     setAuthToken(response.data.token);
-                    navigate("/app/menu/soups")
+                    navigate("/app/tables")
                 }).catch((error) => {
-                    navigate("/error");
+                    navigate("/");
                 });
         }
     }

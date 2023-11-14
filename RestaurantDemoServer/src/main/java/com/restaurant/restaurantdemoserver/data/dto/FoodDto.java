@@ -23,7 +23,7 @@ public class FoodDto {
 
     private Integer rating;
 
-    private Set<FoodAllergyDto> foodAllergies;
+    private Set<FoodAllergyDto> allergies;
 
     private String pictureUrl;
 

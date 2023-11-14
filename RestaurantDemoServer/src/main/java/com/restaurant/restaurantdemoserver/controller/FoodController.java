@@ -51,6 +51,11 @@ public class FoodController {
     }
     @PostMapping("/main-courses/{login}")
     public FoodDto insertMaincourse(@PathVariable String login, @RequestBody FoodDto food){
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println(food.toString());
         return foodService.insertMaincourse(login, food);
     }
     @PostMapping("/desserts/{login}")

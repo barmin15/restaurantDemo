@@ -20,7 +20,7 @@ public class FoodConverter {
     public FoodDto convertFoodToDto(Food food) {
         return FoodDto.builder()
                 .name(food.getName())
-                 .foodAllergies(foodAllergyConverter.convertAllergyEntityToDto(food.getFoodAllergies()))
+                .allergies(foodAllergyConverter.convertAllergyEntityToDto(food.getFoodAllergies()))
                 .description(food.getDescription())
                 .pictureUrl(food.getPictureUrl())
                 .price(food.getPrice())
@@ -32,7 +32,7 @@ public class FoodConverter {
     public Food convertFoodDtoToEntity(FoodDto foodDto) {
         return Food.builder()
                 .name(foodDto.getName())
-                .foodAllergies(foodAllergyConverter.convertFoodAllergyDtoToEntity(foodDto.getFoodAllergies()))
+                .foodAllergies(foodAllergyConverter.convertFoodAllergyDtoToEntity(foodDto.getAllergies()))
                 .description(foodDto.getDescription())
                 .pictureUrl(foodDto.getPictureUrl())
                 .rating(foodDto.getRating())
