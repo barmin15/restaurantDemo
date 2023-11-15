@@ -51,7 +51,7 @@ public class DatabaseConfig {
 
         List<TableDto> tables = new ArrayList<>();
 
-        for(int i = 1; i < 20; i++){
+        for(int i = 1; i < 30; i++){
             tables.add(TableDto.builder().tableName("table " + i).build());
         }
 

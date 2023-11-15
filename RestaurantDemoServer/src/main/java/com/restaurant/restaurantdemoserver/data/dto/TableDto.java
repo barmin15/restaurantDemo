@@ -14,5 +14,5 @@ import java.util.UUID;
 public class TableDto {
     private String tableName;
     private UUID publicId;
-    private String qrCode;
+    private byte[] qrCodeBlob;
 }

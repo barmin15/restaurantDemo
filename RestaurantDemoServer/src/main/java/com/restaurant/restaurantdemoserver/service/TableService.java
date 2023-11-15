@@ -6,6 +6,7 @@ import com.restaurant.restaurantdemoserver.data.entity.Table;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public interface TableService {
@@ -14,4 +15,12 @@ public interface TableService {
     List<TableDto> getAll(String login);
 
     TablePageDto nthPageOfTablesByLogin(int page, String login);
+
+    TableDto addNewTableByLogin(String login, TableDto tableDto);
+
+    TableDto getTableByPublicId(UUID publicId);
+
+    TableDto updateByPublicId(UUID publicId, TableDto tableDto);
+
+    void removeByPublicId(UUID publicId);
 }

@@ -20,7 +20,8 @@ public class TableConverter {
     public TableDto convertTableEntityToDto(Table table){
         return TableDto.builder()
                 .tableName(table.getTableName())
-                .qrCode(table.getQrCode())
+                .qrCodeBlob(table.getQrCodeBlob())
+                .publicId(table.getPublicId())
                 .build();
     }
 
@@ -28,7 +29,8 @@ public class TableConverter {
         return Table.builder()
                 .tableName(tableDto.getTableName())
                 .publicId(tableDto.getPublicId())
-                .qrCode(tableDto.getQrCode())
+                .qrCodeBlob(tableDto.getQrCodeBlob())
+                .publicId(tableDto.getPublicId())
                 .build();
     }
 }

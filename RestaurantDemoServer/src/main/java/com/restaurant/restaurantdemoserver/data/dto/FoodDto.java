@@ -25,7 +25,7 @@ public class FoodDto {
 
     private Set<FoodAllergyDto> allergies;
 
-    private String pictureUrl;
+    private byte[] pictureBlob;
 
     private String description;
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.restaurant.restaurantdemoserver.data.helper.MenuItemType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,8 +40,8 @@ public class Food {
     @JsonManagedReference
     private Set<FoodAllergy> foodAllergies;
 
-    @Column(columnDefinition = "TEXT")
-    private String pictureUrl;
+    @Column(length=100000)
+    private byte[] pictureBlob;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -61,6 +62,11 @@ public class Food {
     @PreRemove
     private void removeAssociations() {
        this.menu.getMainCourses().remove(this);
+       this.menu.getDesserts().remove(this);
+       this.menu.getSoups().remove(this);
+       this.menu.getStarters().remove(this);
+       this.menu = null;
+       this.guest = null;
        for(FoodAllergy foodAllergy : this.foodAllergies) {
            foodAllergy.getFoods().remove(this);
        }

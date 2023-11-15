@@ -6,8 +6,12 @@ import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import com.restaurant.restaurantdemoserver.data.entity.Food;
 import com.restaurant.restaurantdemoserver.service.FoodService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
 
@@ -66,5 +70,13 @@ public class FoodController {
     @DeleteMapping("/delete/{publicId}")
     public void deleteByPublicId(@PathVariable UUID publicId){
         foodService.deleteByPublicId(publicId);
+    }
+
+    @PostMapping(value = "/upload-blob/{publicId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public FoodDto uploadFile(@PathVariable UUID publicId, @RequestParam MultipartFile file) throws IOException {
+
+        System.out.println((String.format("File name '%s' uploaded successfully.", file.getOriginalFilename())));
+
+        return foodService.insertPicBlobToFood(publicId, file);
     }
 }

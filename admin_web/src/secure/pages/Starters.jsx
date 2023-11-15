@@ -20,6 +20,10 @@ export default function Starterts() {
         data.length > 0 && setLoading(false);
     }, []);
 
+    useEffect(()=> {
+        if(data.length > 0) setLoading(false);
+    },[data])
+
 
 
     return loading ?

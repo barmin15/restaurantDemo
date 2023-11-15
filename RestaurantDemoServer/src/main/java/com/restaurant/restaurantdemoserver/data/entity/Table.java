@@ -28,7 +28,8 @@ public class Table implements Comparable<Table> {
 
     private String tableName;
 
-    private String qrCode;
+    @Column(length=100000)
+    private byte[] qrCodeBlob;
 
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
@@ -54,5 +55,13 @@ public class Table implements Comparable<Table> {
             return 0;
         }
         return getId().compareTo(o.getId());
+    }
+
+    @PreRemove
+    private void removeAssociations() {
+        this.restaurant.getTables().remove(this);
+        for(Guest guest : this.guests) {
+           guest.setTable(null);
+        }
     }
 }

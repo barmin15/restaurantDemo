@@ -23,15 +23,16 @@ public class FoodAllergyConverter {
         allergies.forEach(allergy -> allergyDtos.add(FoodAllergyDto.builder()
                 .name(allergy.getAllergy().toString())
                 .publicId(allergy.getPublicId())
+                .pictureBlob(allergy.getPictureBlob())
                 .build()));
 
         return allergyDtos;
     }
 
-    public Set<FoodAllergy> convertFoodAllergyDtoToEntity(Set<FoodAllergyDto> foodAllergyDto){
+    public Set<FoodAllergy> convertFoodAllergyDtoToEntity(Set<FoodAllergyDto> foodAllergyDto) {
         Set<UUID> publicIds = new HashSet<>();
 
-        if(foodAllergyDto != null){
+        if (foodAllergyDto != null) {
             foodAllergyDto.forEach(foodAllergy -> publicIds.add(foodAllergy.getPublicId()));
 
             return foodAllergyRepository.getFoodAllergiesByPublicIdIsIn(publicIds)
