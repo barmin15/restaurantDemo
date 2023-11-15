@@ -5,7 +5,6 @@ import reportWebVitals from "./test/reportWebVitals";
 
 //pages
 import Enterance from "./unsecure/pages/Enterance";
-import Menu from "./secure/pages/Menu";
 import Tables from "./secure/pages/Tables";
 import Navbar from "./secure/components/Navbar";
 import EditMenuItem from "./secure/components/EditMenuItem";
@@ -18,6 +17,7 @@ import AlcoholicDrinks from "./secure/pages/AlcoholicDrinks";
 import NonAlcoholicDrinks from "./secure/pages/NonAlcoholicDrinks";
 import MainCourses from "./secure/pages/MainCourse";
 import CreateMenuItem from "./secure/components/CreateMenuItem";
+import EditTable from "./secure/components/EditTable";
 
 const Router = createBrowserRouter([
   {
@@ -66,7 +66,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/app/menu/alcoholic-drinks/create",
-        element: <EditMenuItem />,
+        element: <CreateMenuItem />,
       },
       {
         path: "/app/menu/alcoholic-drinks/:drinkId",
@@ -74,7 +74,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/app/menu/non-alcoholic-drinks/create",
-        element: <EditMenuItem />,
+        element: <CreateMenuItem />,
       },
       {
         path: "/app/menu/non-alcoholic-drinks/:drinkId",
@@ -82,7 +82,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/app/menu/starters/create",
-        element: <EditMenuItem />,
+        element: <CreateMenuItem />,
       },
       {
         path: "/app/menu/starters/:foodId",
@@ -90,7 +90,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/app/menu/soups/create",
-        element: <EditMenuItem />,
+        element: <CreateMenuItem />,
       },
       {
         path: "/app/menu/soups/:foodId",
@@ -106,7 +106,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/app/menu/desserts/create",
-        element: <EditMenuItem />,
+        element: <CreateMenuItem />,
       },
       {
         path: "/app/menu/desserts/:foodId",
@@ -115,7 +115,11 @@ const Router = createBrowserRouter([
       {
         path: "/app/tables",
         element: <Tables />
-      }
+      },
+      {
+        path: "/app/tables/:foodId",
+        element: <EditTable />,
+      },
     ]
   }
 ]);

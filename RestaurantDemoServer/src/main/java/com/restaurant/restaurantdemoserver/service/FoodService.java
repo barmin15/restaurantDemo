@@ -3,6 +3,7 @@ package com.restaurant.restaurantdemoserver.service;
 import com.restaurant.restaurantdemoserver.data.dto.FoodDto;
 import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.UUID;
@@ -31,4 +32,6 @@ public interface FoodService {
     FoodDto updateByPublicId(UUID publicId, FoodDto foodDto);
 
     void deleteByPublicId(UUID publicId);
+
+    FoodDto insertPicBlobToFood(UUID publicId, MultipartFile file);
 }

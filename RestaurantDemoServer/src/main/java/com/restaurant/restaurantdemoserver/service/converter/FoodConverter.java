@@ -22,7 +22,7 @@ public class FoodConverter {
                 .name(food.getName())
                 .allergies(foodAllergyConverter.convertAllergyEntityToDto(food.getFoodAllergies()))
                 .description(food.getDescription())
-                .pictureUrl(food.getPictureUrl())
+                .pictureBlob(food.getPictureBlob())
                 .price(food.getPrice())
                 .rating(food.getRating())
                 .publicId(food.getPublicId())
@@ -34,7 +34,7 @@ public class FoodConverter {
                 .name(foodDto.getName())
                 .foodAllergies(foodAllergyConverter.convertFoodAllergyDtoToEntity(foodDto.getAllergies()))
                 .description(foodDto.getDescription())
-                .pictureUrl(foodDto.getPictureUrl())
+                .pictureBlob(foodDto.getPictureBlob())
                 .rating(foodDto.getRating())
                 .price(foodDto.getPrice())
                 .build();

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../css/createMenuItem.css";
 import noImagePic from "../../images/scenery.png";
-import { request } from "../../fetch/fetch";
+import { request, fileImagePostRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { getFoodCategory, getSourcePath } from "../../logic/urlLogic";
 import Allergies from "./Allergies";
@@ -15,8 +15,9 @@ export default function CreateMenuItem() {
   const [allergies, setAllergies] = useState([]);
   const [description, setDescription] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,12 +28,13 @@ export default function CreateMenuItem() {
       description,
       imgUrl,
     };
-
     let foodCategory = getFoodCategory(location.pathname);
 
     request("POST", `/api/food/${foodCategory}/${getUserLogin()}`, food)
-      .then((res) =>  navigate(getSourcePath(location.pathname)))
-      .catch((error) => console.error(error));
+      .then((res) => fileUpload(`/api/food/upload-blob/${res.data.publicId}`))
+      .catch((error) => navigate("/"));
+
+
   };
 
   const handleCheck = (e) => {
@@ -43,6 +45,17 @@ export default function CreateMenuItem() {
       setAllergies([...allergies.filter((a) => a.publicId !== e.target.id)]);
     }
   };
+
+  function fileUpload(endpoint) {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    fileImagePostRequest("POST", endpoint, formData)
+      .then(res => {
+        navigate(getSourcePath(location.pathname))
+      })
+      .catch((error) => navigate('/'));
+  };
+
 
   return (
     <div className="cont">
@@ -92,6 +105,11 @@ export default function CreateMenuItem() {
           </div>
           <div className="col-75">
             <input
+              value={""}
+              onChange={(e) => {
+                setImgUrl(URL.createObjectURL(e.target.files[0]))
+                setSelectedFile(e.target.files[0]);
+              }}
               className="img"
               type="file"
               id="img"
@@ -99,6 +117,7 @@ export default function CreateMenuItem() {
               accept="image/*"
             />
           </div>
+          <img src={imgUrl} alt="" className="inputedImage" />
         </div>
         <div className="row">
           <div className="col-25">

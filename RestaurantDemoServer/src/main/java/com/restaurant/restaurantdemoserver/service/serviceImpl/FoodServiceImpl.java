@@ -15,8 +15,10 @@ import com.restaurant.restaurantdemoserver.service.converter.FoodAllergyConverte
 import com.restaurant.restaurantdemoserver.service.converter.FoodConverter;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.UUID;
@@ -203,7 +205,19 @@ public class FoodServiceImpl implements FoodService {
     @Transactional
     @Override
     public void deleteByPublicId(UUID publicId) {
-        foodRepository.removeByPublicId(publicId);
+        foodRepository.deleteByPublicId(publicId);
+    }
+
+    @SneakyThrows
+    @Override
+    public FoodDto insertPicBlobToFood(UUID publicId, MultipartFile file) {
+        Food food = foodRepository.getFoodByPublicId(publicId)
+                .orElseThrow(()-> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+
+        food.setPictureBlob(file.getBytes());
+
+        Food saved = foodRepository.save(food);
+        return foodConverter.convertFoodToDto(food);
     }
 
 

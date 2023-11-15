@@ -24,8 +24,8 @@ public class FoodAllergy {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID publicId;
 
-    @Column(columnDefinition = "TEXT")
-    private String iconUrlBlob;
+    @Column(length=100000)
+    private byte[] pictureBlob;
 
     @Enumerated(EnumType.STRING)
     private Allergy allergy;

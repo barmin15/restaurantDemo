@@ -15,5 +15,5 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 
     Optional<Set<Food>> getAllByMenu_IdAndMenuItemType(Long menuId, MenuItemType menuItemType);
 
-    boolean removeByPublicId(UUID publicId);
+    void deleteByPublicId(UUID publicId);
 }

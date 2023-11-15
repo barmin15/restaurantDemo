@@ -22,7 +22,7 @@ public class DrinkDto {
 
     private Double price;
 
-    private String pictureUrl;
+    private byte[] pictureBlob;
 
     private String description;
 

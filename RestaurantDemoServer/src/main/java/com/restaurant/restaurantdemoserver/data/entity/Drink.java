@@ -35,8 +35,8 @@ public class Drink {
     @Enumerated(EnumType.STRING)
     private MenuItemType menuItemType;
 
-    @Column(columnDefinition = "TEXT")
-    private String pictureUrl;
+    @Column(length=100000)
+    private byte[] pictureBlob;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -52,4 +52,15 @@ public class Drink {
     @ManyToMany()
     @JsonManagedReference
     private Set<FoodAllergy> drinkAllergies;
+
+    @PreRemove
+    private void removeAssociations() {
+        this.menu.getNonAlcoholicDrinks().remove(this);
+        this.menu.getAlcoholicDrinks().remove(this);
+        this.menu = null;
+        this.guest = null;
+        for(FoodAllergy foodAllergy : this.drinkAllergies) {
+            foodAllergy.getDrinks().remove(this);
+        }
+    }
 }

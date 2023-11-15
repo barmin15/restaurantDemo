@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../css/editMenuItem.css";
-import noImagePic from "../../images/scenery.png";
 import { request, getRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { getFoodCategory, getProductId, getSourcePath } from "../../logic/urlLogic";
 import Allergies from "./Allergies.jsx";
 import Loading from "../../unsecure/pages/Loading.jsx"
+import { Buffer } from "buffer";
 
 export default function EditMenuItem() {
 
   const [menuItem, setMenuItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [url, setUrl] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,11 +28,24 @@ export default function EditMenuItem() {
     getRequest(`/api/food/${itemId}`)
       .then(res => setMenuItem(res.data))
       .catch(err => navigate("/"));
+
   }, []);
 
   useEffect(() => {
+    if (menuItem) {
+     
+      const buffer = Buffer.from(menuItem.pictureBlob, "base64");
+
+      const blob = new Blob([buffer], { type: "image/jpeg" })
+
+      console.log(blob)
+      setUrl(blob);
+    }
+  }, [menuItem])
+
+  useEffect(() => {
     menuItem !== null && setLoading(false);
-  },[menuItem])
+  }, [menuItem])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,18 +55,18 @@ export default function EditMenuItem() {
       .catch(error => console.error(error));
 
   };
-  
+
   const handleCheck = (e) => {
     e.preventDefault();
 
     if (!menuItem.allergies.map((element) => element.publicId).includes(e.target.id)) {
-      setMenuItem({...menuItem, allergies: [...menuItem.allergies, { publicId: e.target.id }]});
+      setMenuItem({ ...menuItem, allergies: [...menuItem.allergies, { publicId: e.target.id }] });
     } else {
-      setMenuItem({...menuItem, allergies: menuItem.allergies.filter(a => a.publicId !== e.target.id)})
+      setMenuItem({ ...menuItem, allergies: menuItem.allergies.filter(a => a.publicId !== e.target.id) })
     }
   }
 
-  return ( loading ? <Loading /> :
+  return (loading ? <Loading /> :
     <div className="cont">
       <form onChange={handleChange}>
         <div className="row">
@@ -105,6 +119,7 @@ export default function EditMenuItem() {
               accept="image/*"
             />
           </div>
+          <img src={url && URL.createObjectURL(url)} alt="" className="inputedImage" />
         </div>
         <div className="row">
           <div className="col-25">
