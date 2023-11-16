@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -21,6 +22,15 @@ import java.util.UUID;
 public class FoodController {
 
     private final FoodService foodService;
+
+    @GetMapping("/main-courses/{foodName}/search/{login}")
+    public Set<FoodDto> getMainCoursesBySearchAndLogin(@PathVariable String foodName, @PathVariable String login) {
+        if (foodName.equals("null")) {
+            return foodService.getMainCoursesBySearchAndLogin(login);
+        } else {
+            return foodService.getMainCoursesBySearchAndLogin(foodName, login);
+        }
+    }
 
     @GetMapping("/starters/{login}")
     public Set<FoodDto> getStartersByLogin(@PathVariable String login){

@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,11 +35,16 @@ public class FoodServiceImpl implements FoodService {
     private final FoodRepository foodRepository;
     private final FoodAllergyConverter foodAllergyConverter;
     private final FoodConverter foodConverter;
+ 
+    private Restaurant getRestaurantByLogin(String login) {
+        Restaurant restaurant = restaurantRepository.findByLogin(login)
+                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        return restaurant;
+    }
 
     @Override
     public Set<FoodDto> getStartersByLogin(String login) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -50,8 +56,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Set<FoodDto> getSoupsByLogin(String login) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -63,8 +68,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Set<FoodDto> getMainCoursesByLogin(String login) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -76,8 +80,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Set<FoodDto> getDessertsByLogin(String login) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Long menuId = restaurant.getMenu().getId();
 
@@ -86,6 +89,70 @@ public class FoodServiceImpl implements FoodService {
 
         return desserts.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
+
+//    @Override
+//    public Set<FoodDto> getStartersBySearchAndLogin(String foodName, String login) {
+//        Restaurant restaurant = restaurantRepository.findByLogin(login)
+//                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+//
+//        Long menuId = restaurant.getMenu().getId();
+//
+//        Set<Food> starters = foodRepository.getAllByMenuContainsFoodName_IdAndMenuItemType(menuId, MenuItemType.Dessert, foodName)
+//                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+//
+//        return starters.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
+//    }
+
+//    @Override
+//    public Set<FoodDto> getSoupsBySearchAndLogin(String foodName, String login) {
+//        Restaurant restaurant = restaurantRepository.findByLogin(login)
+//                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+//
+//        Long menuId = restaurant.getMenu().getId();
+//
+//        Set<Food> soups = foodRepository.getAllByMenuContainsFoodName_IdAndMenuItemType(menuId, MenuItemType.Soup, foodName)
+//                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+//
+//        return soups.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
+//    }
+
+    @Override
+    public Set<FoodDto> getMainCoursesBySearchAndLogin(String foodName, String login) {
+        Restaurant restaurant = getRestaurantByLogin(login);
+
+        Long menuId = restaurant.getMenu().getId();
+
+        Set<Food> mainCourses = foodRepository.getAllByMenu_IdAndMenuItemTypeAndNameContaining(menuId, MenuItemType.Main_Course, foodName)
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+
+        return mainCourses.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<FoodDto> getMainCoursesBySearchAndLogin(String login) {
+        Restaurant restaurant = getRestaurantByLogin(login);
+
+        Long menuId = restaurant.getMenu().getId();
+
+        Set<Food> mainCourses = foodRepository.getAllByMenu_IdAndMenuItemType(menuId, MenuItemType.Main_Course)
+                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+
+        return mainCourses.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
+    }
+
+
+//    @Override
+//    public Set<FoodDto> getDessertsBySearchAndLogin(String foodName, String login) {
+//        Restaurant restaurant = restaurantRepository.findByLogin(login)
+//                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+//
+//        Long menuId = restaurant.getMenu().getId();
+//
+//        Set<Food> desserts = foodRepository.getAllByMenuContainsFoodName_IdAndMenuItemType(menuId, MenuItemType.Dessert, foodName)
+//                .orElseThrow(() -> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
+//
+//        return desserts.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
+//    }
 
     @Override
     public FoodDto getFoodByPublicId(UUID publicId) {
@@ -97,8 +164,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public FoodDto insertStarter(String login, FoodDto food) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Starter);
@@ -120,8 +186,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public FoodDto insertSoup(String login, FoodDto food) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Soup);
@@ -142,8 +207,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public FoodDto insertMaincourse(String login, FoodDto food) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Main_Course);
@@ -165,8 +229,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public FoodDto insertDessert(String login, FoodDto food) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
-                .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
+        Restaurant restaurant = getRestaurantByLogin(login);
 
         Food converted = foodConverter.convertFoodDtoToEntity(food);
         converted.setMenuItemType(MenuItemType.Dessert);

@@ -6,6 +6,7 @@ import MenuMapper from "../components/MenuMapper";
 import { useNavigate } from "react-router-dom";
 import "../css/itemMapper.css";
 import "../css/addItem.css";
+import SearchBar from "../components/SearchBar";
 
 export default function AlcoholicDrinks() {
     const navigate = useNavigate();
