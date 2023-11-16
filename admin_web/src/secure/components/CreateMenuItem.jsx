@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../css/createMenuItem.css";
-import noImagePic from "../../images/scenery.png";
 import { request, fileImagePostRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { getFoodCategory, getSourcePath } from "../../logic/urlLogic";
 import Allergies from "./Allergies";
+import Resizer from "react-image-file-resizer";
 
 export default function CreateMenuItem() {
   const location = useLocation();
@@ -31,11 +31,22 @@ export default function CreateMenuItem() {
     let foodCategory = getFoodCategory(location.pathname);
 
     request("POST", `/api/food/${foodCategory}/${getUserLogin()}`, food)
-      .then((res) => fileUpload(`/api/food/upload-blob/${res.data.publicId}`))
+      .then((res) => {
+        selectedFile !== null ?
+          fileUpload(`/api/food/upload-blob/${res.data.publicId}`) :
+          navigate(getSourcePath(location.pathname))
+      })
       .catch((error) => navigate("/"));
 
 
   };
+
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 300, 300, 'JPEG', 100, 0,
+      uri => {
+        setSelectedFile(uri);
+      }, 'file');
+  });
 
   const handleCheck = (e) => {
     e.preventDefault();
@@ -106,9 +117,9 @@ export default function CreateMenuItem() {
           <div className="col-75">
             <input
               value={""}
-              onChange={(e) => {
+              onChange={async (e) => {
                 setImgUrl(URL.createObjectURL(e.target.files[0]))
-                setSelectedFile(e.target.files[0]);
+                await resizeFile(e.target.files[0]);
               }}
               className="img"
               type="file"

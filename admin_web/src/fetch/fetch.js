@@ -1,9 +1,6 @@
 import axios from "axios";
 import { getAuthToken } from "../storage/localStorage"
 
-
-
-
 export const request = (method, url, data) => {
     axios.defaults.baseURL = "";
     axios.defaults.headers.post["Content-Type"] = "application/json";

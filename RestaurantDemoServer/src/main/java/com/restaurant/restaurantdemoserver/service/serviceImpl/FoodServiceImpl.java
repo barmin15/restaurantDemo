@@ -7,6 +7,7 @@ import com.restaurant.restaurantdemoserver.data.entity.Menu;
 import com.restaurant.restaurantdemoserver.data.entity.Restaurant;
 import com.restaurant.restaurantdemoserver.data.helper.MenuItemType;
 import com.restaurant.restaurantdemoserver.exception.AppException;
+import com.restaurant.restaurantdemoserver.imageCompressor.ImageCompressor;
 import com.restaurant.restaurantdemoserver.repository.FoodRepository;
 import com.restaurant.restaurantdemoserver.repository.MenuRepository;
 import com.restaurant.restaurantdemoserver.repository.RestaurantRepository;
@@ -214,7 +215,7 @@ public class FoodServiceImpl implements FoodService {
         Food food = foodRepository.getFoodByPublicId(publicId)
                 .orElseThrow(()-> new AppException("Unknown Food", HttpStatus.NOT_FOUND));
 
-        food.setPictureBlob(file.getBytes());
+        food.setPictureBlob(ImageCompressor.compressImage(file));
 
         Food saved = foodRepository.save(food);
         return foodConverter.convertFoodToDto(food);

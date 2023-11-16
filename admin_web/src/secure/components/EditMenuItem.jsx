@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../css/editMenuItem.css";
-import { request, getRequest } from "../../fetch/fetch";
+import { request, getRequest, fileImagePostRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { getFoodCategory, getProductId, getSourcePath } from "../../logic/urlLogic";
 import Allergies from "./Allergies.jsx";
 import Loading from "../../unsecure/pages/Loading.jsx"
 import { Buffer } from "buffer";
+import Resizer from "react-image-file-resizer";
 
 export default function EditMenuItem() {
-
+  const [imgUrl, setImgUrl] = useState(null);
   const [menuItem, setMenuItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [url, setUrl] = useState(null);
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,14 +34,13 @@ export default function EditMenuItem() {
 
   useEffect(() => {
     if (menuItem) {
-     
-      const buffer = Buffer.from(menuItem.pictureBlob, "base64");
-
-      const blob = new Blob([buffer], { type: "image/jpeg" })
-
-      console.log(blob)
-      setUrl(blob);
+      if(menuItem.pictureBlob){
+        const buffer = Buffer.from(menuItem.pictureBlob, "base64");
+        const blob = new Blob([buffer], { type: "image/jpeg" })
+        setUrl(blob);  
+      }
     }
+
   }, [menuItem])
 
   useEffect(() => {
@@ -51,7 +51,11 @@ export default function EditMenuItem() {
     e.preventDefault();
 
     request("PUT", `/api/food/update/${menuItem.publicId}`, menuItem)
-      .then((res) => navigate(getSourcePath(location.pathname)))
+      .then((res) => {
+        selectedFile !== null ?
+          fileUpload(`/api/food/upload-blob/${res.data.publicId}`) :
+          navigate(getSourcePath(location.pathname))
+      })
       .catch(error => console.error(error));
 
   };
@@ -65,6 +69,24 @@ export default function EditMenuItem() {
       setMenuItem({ ...menuItem, allergies: menuItem.allergies.filter(a => a.publicId !== e.target.id) })
     }
   }
+
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 300, 300, 'JPEG', 100, 0,
+      uri => {
+        setSelectedFile(uri);
+      }, 'file');
+  });
+
+
+  function fileUpload(endpoint) {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    fileImagePostRequest("POST", endpoint, formData)
+      .then(res => {
+        navigate(getSourcePath(location.pathname))
+      })
+      .catch((error) => navigate('/'));
+  };
 
   return (loading ? <Loading /> :
     <div className="cont">
@@ -112,6 +134,11 @@ export default function EditMenuItem() {
           </div>
           <div className="col-75">
             <input
+              value={""}
+              onChange={async (e) => {
+                setImgUrl(URL.createObjectURL(e.target.files[0]))
+                await resizeFile(e.target.files[0]);
+              }}
               className="img"
               type="file"
               id="img"
@@ -119,7 +146,7 @@ export default function EditMenuItem() {
               accept="image/*"
             />
           </div>
-          <img src={url && URL.createObjectURL(url)} alt="" className="inputedImage" />
+          <img src={imgUrl === null ? url && URL.createObjectURL(url) : imgUrl} alt="" className="inputedImage" />
         </div>
         <div className="row">
           <div className="col-25">
