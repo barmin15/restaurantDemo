@@ -19,6 +19,16 @@ public interface FoodService {
 
     Set<FoodDto> getDessertsByLogin(String login);
 
+//    Set<FoodDto> getStartersBySearchAndLogin(String foodName, String login);
+
+//    Set<FoodDto> getSoupsBySearchAndLogin(String foodName, String login);
+
+    Set<FoodDto> getMainCoursesBySearchAndLogin(String foodName, String login);
+
+    Set<FoodDto> getMainCoursesBySearchAndLogin(String login);
+
+//    Set<FoodDto> getDessertsBySearchAndLogin(String foodName, String login);
+
     FoodDto getFoodByPublicId(UUID publicId);
 
     FoodDto insertStarter(String login, FoodDto food);
