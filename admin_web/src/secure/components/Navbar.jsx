@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getRequest } from "../../fetch/fetch";
 import { getUserLogin } from "../../storage/localStorage";
 import { Outlet, NavLink } from "react-router-dom";
-
+import { setAuthToken, setUserLogin } from "../../storage/localStorage"
 export default function Navbar() {
   const navigate = useNavigate();
   const [name, setName] = useState(null);
@@ -22,11 +22,16 @@ export default function Navbar() {
       .catch((error) => navigate("/"))
   })
 
+
   return (<>
     <nav className="navbar">
       <NavLink className="restaurant">{name}</NavLink>
       <img className="logo" src={imageUrl} alt="logo" />
-      <NavLink className="logout" to={"/"}>
+      <NavLink className="logout" to={"/"} 
+      onClick={(e) => {
+        setAuthToken(null);
+        setUserLogin(null);
+      }}>
         Log out
       </NavLink>
       <NavLink className="tables" to={"/app/tables"}>
