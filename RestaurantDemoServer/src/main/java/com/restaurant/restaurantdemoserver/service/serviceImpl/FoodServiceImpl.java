@@ -33,15 +33,14 @@ public class FoodServiceImpl implements FoodService {
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
     private final FoodRepository foodRepository;
-    private final FoodAllergyConverter foodAllergyConverter;
     private final FoodConverter foodConverter;
  
     private Restaurant getRestaurantByLogin(String login) {
-        Restaurant restaurant = restaurantRepository.findByLogin(login)
+        return restaurantRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
-        return restaurant;
     }
 
+    @Transactional
     @Override
     public Set<FoodDto> getStartersByLogin(String login) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -54,6 +53,7 @@ public class FoodServiceImpl implements FoodService {
         return starters.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
+    @Transactional
     @Override
     public Set<FoodDto> getSoupsByLogin(String login) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -66,6 +66,7 @@ public class FoodServiceImpl implements FoodService {
         return soups.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
+    @Transactional
     @Override
     public Set<FoodDto> getMainCoursesByLogin(String login) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -78,6 +79,7 @@ public class FoodServiceImpl implements FoodService {
         return mainCourses.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
+    @Transactional
     @Override
     public Set<FoodDto> getDessertsByLogin(String login) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -116,6 +118,7 @@ public class FoodServiceImpl implements FoodService {
 //        return soups.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
 //    }
 
+    @Transactional
     @Override
     public Set<FoodDto> getMainCoursesBySearchAndLogin(String foodName, String login) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -128,6 +131,7 @@ public class FoodServiceImpl implements FoodService {
         return mainCourses.stream().map(foodConverter::convertFoodToDto).collect(Collectors.toSet());
     }
 
+    @Transactional
     @Override
     public Set<FoodDto> getMainCoursesBySearchAndLogin(String login) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -162,6 +166,7 @@ public class FoodServiceImpl implements FoodService {
         return foodConverter.convertFoodToDto(food);
     }
 
+    @Transactional
     @Override
     public FoodDto insertStarter(String login, FoodDto food) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -184,6 +189,7 @@ public class FoodServiceImpl implements FoodService {
         return foodConverter.convertFoodToDto(inserted);
     }
 
+    @Transactional
     @Override
     public FoodDto insertSoup(String login, FoodDto food) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -205,6 +211,7 @@ public class FoodServiceImpl implements FoodService {
         return foodConverter.convertFoodToDto(inserted);
     }
 
+    @Transactional
     @Override
     public FoodDto insertMaincourse(String login, FoodDto food) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -227,6 +234,7 @@ public class FoodServiceImpl implements FoodService {
         return foodConverter.convertFoodToDto(inserted);
     }
 
+    @Transactional
     @Override
     public FoodDto insertDessert(String login, FoodDto food) {
         Restaurant restaurant = getRestaurantByLogin(login);
@@ -249,6 +257,7 @@ public class FoodServiceImpl implements FoodService {
         return foodConverter.convertFoodToDto(inserted);
     }
 
+    @Transactional
     @Override
     public FoodDto updateByPublicId(UUID publicId, FoodDto foodDto) {
         Food food1 = foodConverter.convertFoodDtoToEntity(foodDto);
@@ -266,6 +275,7 @@ public class FoodServiceImpl implements FoodService {
         return foodConverter.convertFoodToDto(food);
     }
 
+
     @Transactional
     @Override
     public void deleteByPublicId(UUID publicId) {
@@ -281,7 +291,8 @@ public class FoodServiceImpl implements FoodService {
         food.setPictureBlob(ImageCompressor.compressImage(file));
 
         Food saved = foodRepository.save(food);
-        return foodConverter.convertFoodToDto(food);
+
+        return foodConverter.convertFoodToDto(saved);
     }
 
 

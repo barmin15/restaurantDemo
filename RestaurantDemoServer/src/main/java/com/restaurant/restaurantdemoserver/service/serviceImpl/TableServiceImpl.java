@@ -42,6 +42,7 @@ public class TableServiceImpl implements TableService {
 
     }
 
+    @Transactional
     @Override
     public List<TableDto> getAll(String login) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
@@ -56,6 +57,7 @@ public class TableServiceImpl implements TableService {
         return tables.stream().map(tableConverter::convertTableEntityToDto).toList();
     }
 
+    @Transactional
     @Override
     public TablePageDto nthPageOfTablesByLogin(int page, String login) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
@@ -81,6 +83,7 @@ public class TableServiceImpl implements TableService {
         return tablePageDto;
     }
 
+    @Transactional
     @Override
     public TableDto addNewTableByLogin(String login, TableDto tableDto) {
         Table table = tableConverter.convertTableDtoNameToEntityName(tableDto);
@@ -98,6 +101,7 @@ public class TableServiceImpl implements TableService {
         return tableConverter.convertTableEntityToDto(saved);
     }
 
+    @Transactional
     @Override
     public TableDto getTableByPublicId(UUID publicId) {
         Table table = tableRepository.getTableByPublicId(publicId)

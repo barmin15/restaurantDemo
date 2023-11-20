@@ -10,6 +10,7 @@ import com.restaurant.restaurantdemoserver.repository.MenuRepository;
 import com.restaurant.restaurantdemoserver.repository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.service.DrinkService;
 import com.restaurant.restaurantdemoserver.service.converter.DrinkConverter;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class DrinkServiceImpl implements DrinkService {
     private final MenuRepository menuRepository;
     private final DrinkConverter drinkConverter;
 
-
+    @Transactional
     @Override
     public Set<DrinkDto> getAlcoholicDrinksByLogin(String login) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
@@ -42,6 +43,7 @@ public class DrinkServiceImpl implements DrinkService {
         return alcoholicDrinks.stream().map(drinkConverter::convertDrinkToDto).collect(Collectors.toSet());
     }
 
+    @Transactional
     @Override
     public Set<DrinkDto> getNonAlcoholicDrinkByLogin(String login) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
@@ -63,6 +65,7 @@ public class DrinkServiceImpl implements DrinkService {
         return drinkConverter.convertDrinkToDto(drink);
     }
 
+    @Transactional
     @Override
     public DrinkDto insertAlcoholicDrink(String login, DrinkDto drink) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
@@ -86,6 +89,7 @@ public class DrinkServiceImpl implements DrinkService {
         return drinkConverter.convertDrinkToDto(inserted);
     }
 
+    @Transactional
     @Override
     public DrinkDto insertNonAlcoholicDrink(String login, DrinkDto drink) {
         Restaurant restaurant = restaurantRepository.findByLogin(login)
