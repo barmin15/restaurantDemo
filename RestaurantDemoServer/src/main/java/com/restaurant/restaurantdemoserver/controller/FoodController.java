@@ -85,8 +85,6 @@ public class FoodController {
     @PostMapping(value = "/upload-blob/{publicId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FoodDto uploadFile(@PathVariable UUID publicId, @RequestParam MultipartFile file) throws IOException {
 
-        System.out.println((String.format("File name '%s' uploaded successfully.", file.getOriginalFilename())));
-
         return foodService.insertPicBlobToFood(publicId, file);
     }
 }
