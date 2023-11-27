@@ -54,6 +54,14 @@ public class Food {
     @JsonBackReference
     private Guest guest;
 
+    @ManyToMany
+    @JsonManagedReference
+    private Set<Order> foodOrders;
+
+    @ManyToMany
+    @JsonManagedReference
+    private Set<Order> drinkOrders;
+
     public void addFoodAllergy(FoodAllergy foodAllergy){
         if(foodAllergies == null) foodAllergies = new HashSet<>();
 

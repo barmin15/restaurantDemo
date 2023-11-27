@@ -42,6 +42,8 @@ public class Restaurant {
     @JsonManagedReference
     private Set<Table> tables;
 
+    @OneToOne
+    private Kitchen kitchen;
 
     public void addTable(Table table){
         table.setRestaurant(this);
