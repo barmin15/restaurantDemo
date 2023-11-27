@@ -39,9 +39,9 @@ public class Table implements Comparable<Table> {
     @JsonBackReference
     private Restaurant restaurant;
 
-    public void addRestaurant(Restaurant restaurant) {
-        restaurant.addTable(this);
-    }
+    @OneToMany
+    @JsonManagedReference
+    private Set<Order> orders;
 
     public void addGuest(Guest guest) {
         if (guests == null) guests = new HashSet<>();

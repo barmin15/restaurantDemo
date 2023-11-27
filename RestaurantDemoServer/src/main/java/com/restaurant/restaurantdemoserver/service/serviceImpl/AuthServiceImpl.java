@@ -1,15 +1,19 @@
 package com.restaurant.restaurantdemoserver.service.serviceImpl;
 
 
+import com.restaurant.restaurantdemoserver.data.dto.KitchenDto;
 import com.restaurant.restaurantdemoserver.data.dto.RestaurantDto;
 import com.restaurant.restaurantdemoserver.data.dto.security.LoginDto;
 import com.restaurant.restaurantdemoserver.data.dto.security.RegisterDto;
+import com.restaurant.restaurantdemoserver.data.entity.Kitchen;
 import com.restaurant.restaurantdemoserver.data.entity.Menu;
 import com.restaurant.restaurantdemoserver.data.entity.Restaurant;
 import com.restaurant.restaurantdemoserver.exception.AppException;
+import com.restaurant.restaurantdemoserver.repository.KitchenRepository;
 import com.restaurant.restaurantdemoserver.repository.MenuRepository;
 import com.restaurant.restaurantdemoserver.repository.RestaurantRepository;
 import com.restaurant.restaurantdemoserver.service.AuthService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +27,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private final KitchenRepository kitchenRepository;
     private final PasswordEncoder passwordEncoder;
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
@@ -39,6 +44,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    @Transactional
     @Override
     public RestaurantDto register(RegisterDto resturantDto) {
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findByLogin(resturantDto.getLogin());
@@ -60,6 +66,11 @@ public class AuthServiceImpl implements AuthService {
         restaurant.setMenu(menu);
         restaurant = restaurantRepository.save(restaurant);
 
+        Kitchen kitchen = registerKitchen(restaurant);
+
+        restaurant.setKitchen(kitchen);
+
+        restaurant = restaurantRepository.save(restaurant);
 
         return RestaurantDto.builder()
                 .login(restaurant.getLogin())
@@ -69,8 +80,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public RestaurantDto login(LoginDto credentialsDTO) {
-
-
         Restaurant restaurant = restaurantRepository.findByLogin(credentialsDTO.getLogin())
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
@@ -83,5 +92,34 @@ public class AuthServiceImpl implements AuthService {
 
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public KitchenDto loginKitchen(LoginDto credentialsDTO) {
+        Kitchen kitchen = kitchenRepository.findByLogin(credentialsDTO.getLogin())
+                .orElseThrow(() -> new AppException("Unknown Kitchen", HttpStatus.NOT_FOUND));
+
+        if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.getPassword()), kitchen.getPassword())) {
+
+            return KitchenDto.builder()
+                    .login(kitchen.getLogin())
+                    .build();
+        }
+
+        throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
+    }
+
+    private Kitchen registerKitchen(Restaurant restaurant){
+        String starterKitchenPassword = "kitchen";
+
+        Kitchen kitchen = Kitchen.builder()
+                .login(restaurant.getLogin())
+                .password(passwordEncoder.encode(CharBuffer.wrap(starterKitchenPassword)))
+                .restaurant(restaurant)
+                .build();
+
+        return kitchenRepository.save(kitchen);
+    }
+
+
 }
 
