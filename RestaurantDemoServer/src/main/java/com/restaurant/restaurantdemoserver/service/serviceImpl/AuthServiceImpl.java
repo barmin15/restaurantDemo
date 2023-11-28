@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
         Restaurant restaurant = Restaurant.builder()
                 .name(resturantDto.getRestaurantName())
                 .login(resturantDto.getLogin())
-                .password(passwordEncoder.encode(CharBuffer.wrap(resturantDto.getPassword())))
+                .password(passwordEncoder.encode(resturantDto.getPassword()))
                 .build();
         UUID menuPublicId = UUID.randomUUID();
 
@@ -83,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
         Restaurant restaurant = restaurantRepository.findByLogin(credentialsDTO.getLogin())
                 .orElseThrow(() -> new AppException("Unknown Restaurant", HttpStatus.NOT_FOUND));
 
-        if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.getPassword()), restaurant.getPassword())) {
+        if (passwordEncoder.matches(credentialsDTO.getPassword(), restaurant.getPassword())) {
 
             return RestaurantDto.builder()
                     .login(restaurant.getLogin())
@@ -98,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
         Kitchen kitchen = kitchenRepository.findByLogin(credentialsDTO.getLogin())
                 .orElseThrow(() -> new AppException("Unknown Kitchen", HttpStatus.NOT_FOUND));
 
-        if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.getPassword()), kitchen.getPassword())) {
+        if (passwordEncoder.matches(credentialsDTO.getPassword(), kitchen.getPassword())) {
 
             return KitchenDto.builder()
                     .login(kitchen.getLogin())
@@ -113,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
 
         Kitchen kitchen = Kitchen.builder()
                 .login(restaurant.getLogin())
-                .password(passwordEncoder.encode(CharBuffer.wrap(starterKitchenPassword)))
+                .password(passwordEncoder.encode(starterKitchenPassword))
                 .restaurant(restaurant)
                 .build();
 
