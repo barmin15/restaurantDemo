@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class RegisterDto {
     private String login;
     private String restaurantName;
-    private char[] password;
+    private String password;
 }

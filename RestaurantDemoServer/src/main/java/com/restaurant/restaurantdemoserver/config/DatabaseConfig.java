@@ -30,7 +30,7 @@ public class DatabaseConfig {
     private final FoodController foodController;
     private final DrinkController drinkController;
     private final String LOGIN = "pizzame@gmail.com";
-    private final char[] PASSWORD = "pizzame".toCharArray();
+    private final String PASSWORD = "pizzame";
 
     public void createFoodAllergies() {
         List<Allergy> allergies = Arrays.stream(Allergy.values()).toList();
