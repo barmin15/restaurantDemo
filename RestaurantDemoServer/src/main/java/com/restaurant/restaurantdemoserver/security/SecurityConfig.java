@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register", "/api/auth/kitchen/login").permitAll()
+                        .requestMatchers("/swagger-ui/**","/v3/**", "/api/auth/login", "/api/auth/register", "/api/auth/kitchen/login").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
